@@ -1,0 +1,145 @@
+---
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: My API Spec
+  
+servers:
+- url: http://marketplace.eclipse.org/api/v2
+  description: Production endpoint for Eclipse Marketplace API
+
+paths:
+  /listings:
+    get:
+      parameters:
+      - name: licenseType
+        in: query
+        description: | 
+          Optional query parameter to filter the results by license type.
+          The result will be a union of all included license types. 
+          Valid values include:
+          
+          * **COMMERCIAL**  
+            Includes all commercial license types
+          * OPEN_SOURCE # Includes all open source license types
+          * EPL # Includes all versions of the [Eclipse Public License](http://eclipse.org/epl)
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - COMMERCIAL # Includes all commercial license types
+            - OPEN_SOURCE # Includes all open source license types
+            - EPL # Includes all versions of EPL
+            - EPL 1.0
+            - EPL 2.0
+            - GPL
+            
+        style: form
+        explode: true
+        
+      responses:
+        200:
+          description: Success
+
+  /listings/{listingID}:
+    parameters:
+    - name: listingID
+      in: path
+      description: Unique ID of an individual listing
+      required: true
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+      
+    get:
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Listing"
+                
+
+components:
+
+  schemas:
+    
+    Listings:
+      type: array
+      items: 
+        $ref: "#/components/schemas/Listing"
+    
+    Listing:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ObjectID"
+        name:
+          type: string
+          description: Listing Title
+        categories:
+          type: array
+          items: 
+            $ref: "#/components/schemas/Category"
+          description: Array of categories in which this listing appears.
+    
+    Category:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ObjectID"
+        name:
+          type: string
+          description: Category title
+        URL:
+          type: string
+          description: URL to retrieve the category details.
+          
+    ObjectID:
+      description: Unique identifier for an addressable object in the API.
+      type: integer
+      format: int32
+      minimum: 1           
+          
+      #(@attribute) name: [string] Listing Title
+      #(@attribute) url: [string] Listing Url
+      #type: [string] This is the type of listing being returned. 'training' is for a Training and Consulting Listing, 'resource' is for a solutions listing.
+      #categories
+      #category
+      #(@attribute) id: [int] Unique identifier
+      #(@attribute) name: [string] Title
+      #(@attribute) url: [string] Url
+      #tags
+      #tag
+      #(@attribute) id: [int] Unique identifier
+      #(@attribute) name: [string] Title
+      #(@attribute) url: [string] Url
+      #owner: [string] Name of the author
+      #favorited: [int] Number of times a listing was favorited
+      #installstotal: [int] Install count
+      #installsrecent: [int] Install count for the last month
+      #shortdescription: [string] Listing teaser
+      #body: [sting] Full description
+      #created: [int] Timestamp
+      #changed: [int] Timestamp
+      #foundationmember: [bool] TRUE/FALSE
+      #homepageurl: [string] Listing URL website
+      #image: [string] Logo absolute URL
+      #license: [string] Listing license
+      #companyname: [string] Company name
+      #status: [string] Release status
+      #supporturl: [string] Support/documentation URL
+      #version: [string] Version name
+      #eclipseversion: [float] Eclipse release number (4.5, 4.4...)
+      #updateurl: [string] Update site URL
+      #ius: Feature ID's are used by the Eclipse Marketplace Client (MPC) to determine which features to install for your listing https://marketplace-staging.eclipse.org/feature-how-to
+      #iu
+      #(@attribute) required: [string] TRUE or FALSE
+      #(@attribute) selected: [string] TRUE or FALSE
+      #platforms
+      #platform: [string] Compatible OS (Windows, Mac, Linux/GTK)    
+          

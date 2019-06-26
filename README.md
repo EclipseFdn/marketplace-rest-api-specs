@@ -48,16 +48,6 @@ http://www.eclipse.org/legal/epl-2.0.
 
 SPDX-License-Identifier: EPL-2.0
 
-## Related projects
-
-### [EclipseFdn/solstice-assets](https://github.com/EclipseFdn/solstice-assets)
-
-Images, less and JavaScript files for the Eclipse Foundation look and feel.
-
-### [EclipseFdn/hugo-solstice-theme](https://github.com/EclipseFdn/hugo-solstice-theme)
-
-Hugo theme of the Eclipse Foundation look and feel. 
-
 ## Bugs and feature requests
 
 Have a bug or a feature request? Please search for existing and closed issues. If your problem or idea is not addressed yet, [please open a new issue](https://github.com/eclipsefdn/marketplace-rest-api-specs/issues/new).

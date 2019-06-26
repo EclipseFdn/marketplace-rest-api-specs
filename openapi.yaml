@@ -1,0 +1,562 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Eclipse Marketplace Client API v2
+  license:
+    name: Eclipse Public License - 2.0
+    url: 'https://www.eclipse.org/legal/epl-2.0/'
+servers:
+  - url: 'http://marketplace.eclipse.org/api/v2'
+    description: Production endpoint for Eclipse Marketplace API
+paths:
+  /listings:
+    parameters:
+      - $ref: '#/components/parameters/client'
+      - $ref: '#/components/parameters/client.version'
+      - $ref: '#/components/parameters/product'
+      - $ref: '#/components/parameters/product.version'
+      - $ref: '#/components/parameters/runtime.version'
+      - $ref: '#/components/parameters/platform.version'
+      - $ref: '#/components/parameters/java.version'
+      - $ref: '#/components/parameters/os'
+      - $ref: '#/components/parameters/ws'
+      - $ref: '#/components/parameters/nl'
+    get:
+      parameters:
+        - name: licenseType
+          in: query
+          description: |
+            Optional query parameter to filter the results by license type.
+            The result will be a union of all included license types. 
+            Valid values include:
+
+            * COMMERCIAL # Includes all commercial license types  
+            * OPEN_SOURCE # Includes all open source license types  
+            * EPL # Includes all versions of EPL  
+            * EPL 1.0  
+            * EPL 2.0  
+            * GPL  
+          required: false
+          schema:
+            $ref: '#/components/schemas/licenseType'
+          style: form
+          explode: true
+        - name: sort
+          in: query
+          description: 'Optional query parameter to sort the resulting listings. This sort will be performed based on the field name passed, leaving the values unsorted if there is no field name that matches'
+          required: false
+          schema:
+            type: string
+        - name: order
+          in: query
+          description: 'Optional query parameter to sort the resulting listings. This sort will be performed based on the field name passed, leaving the values unsorted if there is no field name that matches'
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Listings'
+  '/listings/{listingID}':
+    parameters:
+      - name: listingID
+        in: path
+        description: Unique ID of an individual listing
+        required: true
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+      - $ref: '#/components/parameters/client'
+      - $ref: '#/components/parameters/client.version'
+      - $ref: '#/components/parameters/product'
+      - $ref: '#/components/parameters/product.version'
+      - $ref: '#/components/parameters/runtime.version'
+      - $ref: '#/components/parameters/platform.version'
+      - $ref: '#/components/parameters/java.version'
+      - $ref: '#/components/parameters/os'
+      - $ref: '#/components/parameters/ws'
+      - $ref: '#/components/parameters/nl'
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Listing'
+        '404':
+          description: No listing found
+  /catalogs:
+    parameters:
+      - $ref: '#/components/parameters/client'
+      - $ref: '#/components/parameters/client.version'
+      - $ref: '#/components/parameters/product'
+      - $ref: '#/components/parameters/product.version'
+      - $ref: '#/components/parameters/runtime.version'
+      - $ref: '#/components/parameters/platform.version'
+      - $ref: '#/components/parameters/java.version'
+      - $ref: '#/components/parameters/os'
+      - $ref: '#/components/parameters/ws'
+      - $ref: '#/components/parameters/nl'
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Catalogs'
+  '/catalogs/{catalogId}':
+    parameters:
+      - name: catalogId
+        in: path
+        description: Unique ID of an individual catalog
+        required: true
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+      - $ref: '#/components/parameters/client'
+      - $ref: '#/components/parameters/client.version'
+      - $ref: '#/components/parameters/product'
+      - $ref: '#/components/parameters/product.version'
+      - $ref: '#/components/parameters/runtime.version'
+      - $ref: '#/components/parameters/platform.version'
+      - $ref: '#/components/parameters/java.version'
+      - $ref: '#/components/parameters/os'
+      - $ref: '#/components/parameters/ws'
+      - $ref: '#/components/parameters/nl'
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Catalog'
+        '404':
+          description: No listing found
+  /markets:
+    parameters:
+      - $ref: '#/components/parameters/client'
+      - $ref: '#/components/parameters/client.version'
+      - $ref: '#/components/parameters/product'
+      - $ref: '#/components/parameters/product.version'
+      - $ref: '#/components/parameters/runtime.version'
+      - $ref: '#/components/parameters/platform.version'
+      - $ref: '#/components/parameters/java.version'
+      - $ref: '#/components/parameters/os'
+      - $ref: '#/components/parameters/ws'
+      - $ref: '#/components/parameters/nl'
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Markets'
+  '/markets/{categoryID}/{marketID}':
+    parameters:
+      - name: categoryID
+        in: path
+        description: Unique ID of an individual category
+        required: true
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+      - name: marketID
+        in: path
+        description: Unique ID of an individual market
+        required: true
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+      - $ref: '#/components/parameters/client'
+      - $ref: '#/components/parameters/client.version'
+      - $ref: '#/components/parameters/product'
+      - $ref: '#/components/parameters/product.version'
+      - $ref: '#/components/parameters/runtime.version'
+      - $ref: '#/components/parameters/platform.version'
+      - $ref: '#/components/parameters/java.version'
+      - $ref: '#/components/parameters/os'
+      - $ref: '#/components/parameters/ws'
+      - $ref: '#/components/parameters/nl'
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '404':
+          description: Not found
+  /featured:
+    parameters:
+      - $ref: '#/components/parameters/client'
+      - $ref: '#/components/parameters/client.version'
+      - $ref: '#/components/parameters/product'
+      - $ref: '#/components/parameters/product.version'
+      - $ref: '#/components/parameters/runtime.version'
+      - $ref: '#/components/parameters/platform.version'
+      - $ref: '#/components/parameters/java.version'
+      - $ref: '#/components/parameters/os'
+      - $ref: '#/components/parameters/ws'
+      - $ref: '#/components/parameters/nl'
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    minimum: 0
+                  listings:
+                    $ref: '#/components/schemas/Listings'
+  '/related/{listingID}':
+    parameters:
+      - in: path
+        name: listingID
+        required: true
+        description: 'A list of comma-separated node ids for installed marketplace nodes, url-encoded.'
+        schema:
+          $ref: '#/components/schemas/ObjectID'
+      - $ref: '#/components/parameters/client'
+      - $ref: '#/components/parameters/client.version'
+      - $ref: '#/components/parameters/product'
+      - $ref: '#/components/parameters/product.version'
+      - $ref: '#/components/parameters/runtime.version'
+      - $ref: '#/components/parameters/platform.version'
+      - $ref: '#/components/parameters/java.version'
+      - $ref: '#/components/parameters/os'
+      - $ref: '#/components/parameters/ws'
+      - $ref: '#/components/parameters/nl'
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    minimum: 0
+                  listings:
+                    $ref: '#/components/schemas/Listings'
+components:
+  parameters:
+    client:
+      name: client
+      in: query
+      description: 'The only valid value for the client variable is org.eclipse.epp.mpc.core. This variable is usually sent from MPC to alter the default list. It''s available for the Most Popular Listings, Top Favorited Listings, Recently Updated Listings and Featured Listings. Only installable listings owned by an Eclipse member company will be returned.'
+      required: false
+      schema:
+        type: string
+    client.version:
+      name: client.version
+      in: query
+      description: The version of the client making the request
+      required: false
+      schema:
+        $ref: '#/components/schemas/osgiVersion'
+    product:
+      name: product
+      in: query
+      description: 'The product id of the target Eclipse, e.g. org.eclipse.sdk.ide or epp.package.java'
+      required: false
+      schema:
+        type: string
+    product.version:
+      name: product.version
+      in: query
+      description: 'The version of the running product of the target Eclipse, identical to the version of the product''s branding plugin'
+      required: false
+      schema:
+        $ref: '#/components/schemas/osgiVersion'
+    runtime.version:
+      name: runtime.version
+      in: query
+      description: The version of the org.eclipse.core.runtime bundle of the target Eclipse
+      required: false
+      schema:
+        $ref: '#/components/schemas/osgiVersion'
+    platform.version:
+      name: platform.version
+      in: query
+      description: (since Kepler/MPC 1.2) The version of the org.eclipse.platform bundle of the target Eclipse
+      required: false
+      schema:
+        $ref: '#/components/schemas/osgiVersion'
+    java.version:
+      name: java.version
+      in: query
+      description: 'The version of the JRE running the target Eclipse, as returned by the JRE''s `System.getProperty("java.version")`'
+      required: false
+      schema:
+        type: string
+    os:
+      name: os
+      in: query
+      description: |
+        Operating system of the user.
+
+        Supported values include: 
+
+        * linux  
+        * win32  
+        * macosx
+      required: false
+      schema:
+        type: string
+    ws:
+      name: ws
+      in: query
+      description: Window system of the user.
+      required: false
+      schema:
+        type: string
+    nl:
+      name: nl
+      in: query
+      description: 'Language code of the user''s locale, e.g. `en_US` or `de_DE`.'
+      required: false
+      schema:
+        type: string
+  schemas:
+    Listing:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ObjectID'
+        name:
+          type: string
+          description: Listing Title
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+          description: Array of categories in which this listing appears.
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+          description: Array of tags that this listing appears.
+        owner:
+          type: string
+          description: Name of the author
+        favorited:
+          type: integer
+          description: Number of times a listing was favorited
+        installstotal:
+          type: integer
+          description: Install count
+        installsrecent:
+          type: integer
+          description: Install count for the last month
+        shortdescription:
+          type: string
+          description: Listing teaser
+        body:
+          type: string
+          description: Full description
+        created:
+          type: integer
+          description: Timestamp
+        changed:
+          type: integer
+          description: Timestamp
+        foundationmember:
+          type: boolean
+          description: TRUE/FALSE
+        homepageurl:
+          type: string
+          description: Listing URL website
+        image:
+          type: string
+          description: Logo absolute URL
+        license:
+          type: string
+          description: Listing license
+        companyname:
+          type: string
+          description: Company name
+        status:
+          type: string
+          description: Release status
+        supporturl:
+          type: string
+          description: Support/documentation URL
+        version:
+          type: string
+          description: Version name
+        eclipseversion:
+          type: number
+          format: float
+          description: 'Eclipse release number (4.5, 4.4...)'
+        updateurl:
+          type: string
+          description: Update site URL
+        ius:
+          type: array
+          items:
+            type: object
+            description: 'Feature ID''s are used by the Eclipse Marketplace Client (MPC) to determine which features to install for your listing https://marketplace-staging.eclipse.org/feature-how-to'
+            properties:
+              required:
+                type: string
+                description: TRUE or FALSE
+              selected:
+                type: string
+                description: TRUE or FALSE
+        platforms:
+          type: array
+          items:
+            type: string
+            description: 'Compatible OS (Windows, Mac, Linux/GTK)'
+    Listings:
+      type: array
+      items:
+        $ref: '#/components/schemas/Listing'
+    Tag:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ObjectID'
+        name:
+          type: string
+          description: Tag Title
+        URL:
+          type: string
+          description: URL to retrieve the category details.
+    Category:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ObjectID'
+        marketID:
+          $ref: '#/components/schemas/ObjectID'
+        name:
+          type: string
+          description: Category title
+        URL:
+          type: string
+          description: URL to retrieve the category details.
+        node:
+          $ref: '#/components/schemas/Listing'
+    Market:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ObjectID'
+        name:
+          type: string
+          description: Listing Title
+        URL:
+          type: string
+          description: URL to retrieve the category details.
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+          description: Array of categories in which this listing appears.
+    Markets:
+      type: array
+      items:
+        $ref: '#/components/schemas/Market'
+    ObjectID:
+      description: Unique identifier for an addressable object in the API.
+      type: integer
+      format: int32
+      minimum: 1
+    Catalogs:
+      type: array
+      items:
+        $ref: '#/components/schemas/Catalog'
+    Catalog:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ObjectID'
+        title:
+          type: string
+          description: Name of catalog
+        url:
+          type: string
+          description: Url prefix of the marketplace catalog
+        selfContained:
+          type: boolean
+          description: TRUE/FALSE
+        icon:
+          type: string
+          description: Absolute url
+        description:
+          type: string
+          description: Short description
+        dependenciesRepository:
+          type: string
+        wizard:
+          type: object
+          properties:
+            title:
+              type: string
+              description: Title of Wizard
+            icon:
+              type: string
+              description: Absolute url
+            searchtab:
+              type: object
+              description: Search tab title
+              properties:
+                enabled:
+                  type: boolean
+                  description: TRUE/FALSE
+            populartab:
+              type: object
+              description: Popular tab title
+              properties:
+                enabled:
+                  type: boolean
+                  description: TRUE/FALSE
+            recenttab:
+              type: object
+              description: Recent tab title
+              properties:
+                enabled:
+                  type: boolean
+                  description: TRUE/FALSE
+            news:
+              type: object
+              description: News content URL.
+              properties:
+                enabled:
+                  type: boolean
+                  description: TRUE/FALSE
+    licenseType:
+      type: string
+      enum:
+        - COMMERCIAL
+        - OPEN_SOURCE
+        - EPL
+        - EPL 1.0
+        - EPL 2.0
+        - GPL
+    osgiVersion:
+      type: number
+      format: float
+      description: Describes the version of OSGi the given platform is using

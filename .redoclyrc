@@ -1,0 +1,7 @@
+swaggerUI: false
+apiTitle: Eclipse Marketplace Client API v2
+splitSpec: false
+codeSamples: false
+travis: true
+oasVersion: 3.0.0
+repo: EclipseFdn/marketplace-rest-api-specs

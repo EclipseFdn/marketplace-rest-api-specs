@@ -49,6 +49,7 @@
         }
       ],
       "get": {
+        "summary": "Retrieve multiple listings",
         "parameters": [
           {
             "name": "licenseType",
@@ -143,6 +144,7 @@
         }
       ],
       "get": {
+        "summary": "Retrieve listing by ID",
         "responses": {
           "200": {
             "description": "Success",
@@ -194,6 +196,7 @@
         }
       ],
       "get": {
+        "summary": "Retrieve multiple listing catalogs",
         "responses": {
           "200": {
             "description": "Success",
@@ -253,6 +256,7 @@
         }
       ],
       "get": {
+        "summary": "Retrieve listing catalog by ID",
         "responses": {
           "200": {
             "description": "Success",
@@ -304,6 +308,7 @@
         }
       ],
       "get": {
+        "summary": "Retrieve multiple markets",
         "responses": {
           "200": {
             "description": "Success",
@@ -374,6 +379,7 @@
         }
       ],
       "get": {
+        "summary": "Retrieve catalog by market",
         "responses": {
           "200": {
             "description": "Success",
@@ -425,6 +431,7 @@
         }
       ],
       "get": {
+        "summary": "Retrieve featured listings",
         "responses": {
           "200": {
             "description": "Success",
@@ -491,6 +498,7 @@
         }
       ],
       "get": {
+        "summary": "Retrieve related listings",
         "responses": {
           "200": {
             "description": "Success",

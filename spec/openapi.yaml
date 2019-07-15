@@ -120,7 +120,81 @@ paths:
           description: No listing found
         500:
           description: Error while retrieving data
-          
+
+  /listings/{listingID}/installs:
+    parameters:
+      - name: listingID
+        in: path
+        description: Unique ID of an individual listing
+        required: true
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+      - $ref: "#/components/parameters/product.version"
+      - $ref: "#/components/parameters/java.version"
+      - $ref: "#/components/parameters/os"
+      - $ref: "#/components/parameters/locale"
+      - $ref: "#/components/parameters/country"
+    get:
+      summary: Retrieve install metrics for listing
+      description: Retrieve install metrics for marketplace a listing by its unique ID. These stats will include available metrics for the last 12 months, as well as the overall install statistics. The parameters that are available for this call act as filters for the statistics, allowing for greater flexibility of analysis of the installation stats.
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Installs"
+        404:
+          description: No listing found
+
+  /listings/{listingID}/version/{versionNumber}/installs:
+    parameters:
+      - name: listingID
+        in: path
+        description: Unique ID of an individual listing
+        required: true
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+      - name: versionNumber
+        in: path
+        description: Numeric ID for the version that is being updated
+        required: true
+        schema:
+          type: number
+          format: float
+          minimum: 0
+    get:
+      parameters:
+        - $ref: "#/components/parameters/product.version"
+        - $ref: "#/components/parameters/java.version"
+        - $ref: "#/components/parameters/os"
+        - $ref: "#/components/parameters/locale"
+        - $ref: "#/components/parameters/country"
+      description: Retrieve install metrics for the given marketplace listing and version by its unique listing ID and version number. These stats will include available metrics for the last 12 months, as well as the overall install statistics for the version. The parameters that are available for this call act as filters for the statistics, allowing for greater flexibility of analysis of the installation stats.
+      summary: Retrieve install metrics for listing and version
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Installs"
+        404:
+          description: Invalid listing and version combination, no data found
+    post:
+      summary: Commit information about an install
+      description: Add information about an install. (Only accessible via the marketplace client)
+      responses:
+        200:
+          description: Success
+        403:
+          description: Forbidden
+        404:
+          description: Invalid listing and version combination, no data found
   /catalogs:
     get:
       summary: Multiple catalogs
@@ -372,6 +446,13 @@ components:
       required: false
       schema:
         type: string
+    country:
+      name: country
+      in: query
+      description: The users country of origin.
+      required: false
+      schema:
+        type: string
 
   schemas:
     Listing:
@@ -585,3 +666,24 @@ components:
       type: number
       format: float
       description: Describes the version of OSGi the given platform is using
+      
+    Installs:
+      type: array
+      minItems: 13
+      items:
+        type: object
+        properties:
+          start:
+            type: string
+            format: datetime
+            description: Start date for the range of counted installs
+          end: 
+            type: string
+            format: datetime
+            description: End date for the range of counted installs
+          count:
+            description: Number of installs in the given period for the given version
+            type: integer
+            format: int32
+            minimum: 0 
+            

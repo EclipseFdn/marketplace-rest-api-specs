@@ -16,45 +16,46 @@
   ],
   "paths": {
     "/listings": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/client"
-        },
-        {
-          "$ref": "#/components/parameters/client.version"
-        },
-        {
-          "$ref": "#/components/parameters/product"
-        },
-        {
-          "$ref": "#/components/parameters/product.version"
-        },
-        {
-          "$ref": "#/components/parameters/runtime.version"
-        },
-        {
-          "$ref": "#/components/parameters/platform.version"
-        },
-        {
-          "$ref": "#/components/parameters/java.version"
-        },
-        {
-          "$ref": "#/components/parameters/os"
-        },
-        {
-          "$ref": "#/components/parameters/ws"
-        },
-        {
-          "$ref": "#/components/parameters/nl"
-        }
-      ],
       "get": {
-        "summary": "Retrieve multiple listings",
+        "summary": "Multiple listings",
         "parameters": [
+          {
+            "$ref": "#/components/parameters/product.version"
+          },
+          {
+            "$ref": "#/components/parameters/runtime.version"
+          },
+          {
+            "$ref": "#/components/parameters/java.version"
+          },
+          {
+            "$ref": "#/components/parameters/os"
+          },
+          {
+            "$ref": "#/components/parameters/locale"
+          },
+          {
+            "name": "marketID",
+            "in": "query",
+            "description": "The ID of the market to search in for listings",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ObjectID"
+            }
+          },
+          {
+            "name": "categoryID",
+            "in": "query",
+            "description": "The ID of the category to search in for listings",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/ObjectID"
+            }
+          },
           {
             "name": "licenseType",
             "in": "query",
-            "description": "Optional query parameter to filter the results by license type.\nThe result will be a union of all included license types. \nValid values include:\n\n* COMMERCIAL # Includes all commercial license types  \n* OPEN_SOURCE # Includes all open source license types  \n* EPL # Includes all versions of EPL  \n* EPL 1.0  \n* EPL 2.0  \n* GPL  \n",
+            "description": "Optional query parameter to filter the results by license type.\nThe result will be a union of all included license types. \nValid values include:\n\n* COMMERCIAL \n* OPEN_SOURCE \n* EPL\n* EPL 1.0  \n* EPL 2.0  \n* GPL  \n",
             "required": false,
             "schema": {
               "$ref": "#/components/schemas/licenseType"
@@ -74,14 +75,10 @@
           {
             "name": "order",
             "in": "query",
-            "description": "Optional query parameter to sort the resulting listings. This sort will be performed based on the field name passed, leaving the values unsorted if there is no field name that matches",
+            "description": "Optional query parameter to order the resulting listings. This sort will be performed based on the field name passed, leaving the values unsorted if there is no field name that matches",
             "required": false,
             "schema": {
-              "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
+              "type": "string"
             }
           }
         ],
@@ -95,6 +92,40 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Error while retrieving data"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update or post a new listing by ID",
+        "requestBody": {
+          "description": "The listing to be updated or inserted into the data set.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Listing"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Listing"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Success (no content)"
+          },
+          "500": {
+            "description": "Error while inserting data"
           }
         }
       }
@@ -113,22 +144,10 @@
           }
         },
         {
-          "$ref": "#/components/parameters/client"
-        },
-        {
-          "$ref": "#/components/parameters/client.version"
-        },
-        {
-          "$ref": "#/components/parameters/product"
-        },
-        {
           "$ref": "#/components/parameters/product.version"
         },
         {
           "$ref": "#/components/parameters/runtime.version"
-        },
-        {
-          "$ref": "#/components/parameters/platform.version"
         },
         {
           "$ref": "#/components/parameters/java.version"
@@ -137,14 +156,11 @@
           "$ref": "#/components/parameters/os"
         },
         {
-          "$ref": "#/components/parameters/ws"
-        },
-        {
-          "$ref": "#/components/parameters/nl"
+          "$ref": "#/components/parameters/locale"
         }
       ],
       "get": {
-        "summary": "Retrieve listing by ID",
+        "summary": "Listing by ID",
         "responses": {
           "200": {
             "description": "Success",
@@ -158,45 +174,16 @@
           },
           "404": {
             "description": "No listing found"
+          },
+          "500": {
+            "description": "Error while retrieving data"
           }
         }
       }
     },
     "/catalogs": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/client"
-        },
-        {
-          "$ref": "#/components/parameters/client.version"
-        },
-        {
-          "$ref": "#/components/parameters/product"
-        },
-        {
-          "$ref": "#/components/parameters/product.version"
-        },
-        {
-          "$ref": "#/components/parameters/runtime.version"
-        },
-        {
-          "$ref": "#/components/parameters/platform.version"
-        },
-        {
-          "$ref": "#/components/parameters/java.version"
-        },
-        {
-          "$ref": "#/components/parameters/os"
-        },
-        {
-          "$ref": "#/components/parameters/ws"
-        },
-        {
-          "$ref": "#/components/parameters/nl"
-        }
-      ],
       "get": {
-        "summary": "Retrieve multiple listing catalogs",
+        "summary": "Multiple catalogs",
         "responses": {
           "200": {
             "description": "Success",
@@ -207,6 +194,40 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Error while retrieving data"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update or post a new catalog by ID",
+        "requestBody": {
+          "description": "The catalog to be updated or inserted into the data set.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Catalog"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Catalog"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Success (no content)"
+          },
+          "500": {
+            "description": "Error while inserting data"
           }
         }
       }
@@ -223,40 +244,10 @@
             "format": "int32",
             "minimum": 1
           }
-        },
-        {
-          "$ref": "#/components/parameters/client"
-        },
-        {
-          "$ref": "#/components/parameters/client.version"
-        },
-        {
-          "$ref": "#/components/parameters/product"
-        },
-        {
-          "$ref": "#/components/parameters/product.version"
-        },
-        {
-          "$ref": "#/components/parameters/runtime.version"
-        },
-        {
-          "$ref": "#/components/parameters/platform.version"
-        },
-        {
-          "$ref": "#/components/parameters/java.version"
-        },
-        {
-          "$ref": "#/components/parameters/os"
-        },
-        {
-          "$ref": "#/components/parameters/ws"
-        },
-        {
-          "$ref": "#/components/parameters/nl"
         }
       ],
       "get": {
-        "summary": "Retrieve listing catalog by ID",
+        "summary": "Catalog by ID",
         "responses": {
           "200": {
             "description": "Success",
@@ -269,46 +260,17 @@
             }
           },
           "404": {
-            "description": "No listing found"
+            "description": "No catalog found"
+          },
+          "500": {
+            "description": "Error while retrieving data"
           }
         }
       }
     },
     "/markets": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/client"
-        },
-        {
-          "$ref": "#/components/parameters/client.version"
-        },
-        {
-          "$ref": "#/components/parameters/product"
-        },
-        {
-          "$ref": "#/components/parameters/product.version"
-        },
-        {
-          "$ref": "#/components/parameters/runtime.version"
-        },
-        {
-          "$ref": "#/components/parameters/platform.version"
-        },
-        {
-          "$ref": "#/components/parameters/java.version"
-        },
-        {
-          "$ref": "#/components/parameters/os"
-        },
-        {
-          "$ref": "#/components/parameters/ws"
-        },
-        {
-          "$ref": "#/components/parameters/nl"
-        }
-      ],
       "get": {
-        "summary": "Retrieve multiple markets",
+        "summary": "Multiple markets",
         "responses": {
           "200": {
             "description": "Success",
@@ -319,23 +281,46 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Error while retrieving data"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update or post a new market by ID",
+        "requestBody": {
+          "description": "The market to be updated or inserted into the data set.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Market"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Catalog"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Success (no content)"
+          },
+          "500": {
+            "description": "Error while inserting data"
           }
         }
       }
     },
-    "/markets/{categoryID}/{marketID}": {
+    "/markets/{marketID}": {
       "parameters": [
-        {
-          "name": "categoryID",
-          "in": "path",
-          "description": "Unique ID of an individual category",
-          "required": true,
-          "schema": {
-            "type": "integer",
-            "format": "int32",
-            "minimum": 1
-          }
-        },
         {
           "name": "marketID",
           "in": "path",
@@ -346,53 +331,125 @@
             "format": "int32",
             "minimum": 1
           }
-        },
-        {
-          "$ref": "#/components/parameters/client"
-        },
-        {
-          "$ref": "#/components/parameters/client.version"
-        },
-        {
-          "$ref": "#/components/parameters/product"
-        },
-        {
-          "$ref": "#/components/parameters/product.version"
-        },
-        {
-          "$ref": "#/components/parameters/runtime.version"
-        },
-        {
-          "$ref": "#/components/parameters/platform.version"
-        },
-        {
-          "$ref": "#/components/parameters/java.version"
-        },
-        {
-          "$ref": "#/components/parameters/os"
-        },
-        {
-          "$ref": "#/components/parameters/ws"
-        },
-        {
-          "$ref": "#/components/parameters/nl"
         }
       ],
       "get": {
-        "summary": "Retrieve catalog by market",
+        "summary": "Markets by ID",
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Category"
+                  "$ref": "#/components/schemas/Market"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error while retrieving data"
+          }
+        }
+      }
+    },
+    "/markets/{marketID}/categories/{$categoryID}": {
+      "parameters": [
+        {
+          "name": "marketID",
+          "in": "path",
+          "description": "Unique ID of an individual market",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1
+          }
+        }
+      ]
+    },
+    "/categories": {
+      "get": {
+        "summary": "Multiple categories",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Categories"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error while retrieving data"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update or post a new category by ID",
+        "requestBody": {
+          "description": "The market to be updated or inserted into the data set.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Category"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Catalog"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Success (no content)"
+          },
+          "500": {
+            "description": "Error while inserting data"
+          }
+        }
+      }
+    },
+    "/categories/{catagoryID}": {
+      "parameters": [
+        {
+          "name": "catagoryID",
+          "in": "path",
+          "description": "Unique ID of an individual catalog",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1
+          }
+        }
+      ],
+      "get": {
+        "summary": "Catagory by ID",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Catalog"
                 }
               }
             }
           },
           "404": {
             "description": "Not found"
+          },
+          "500": {
+            "description": "Error while retrieving data"
           }
         }
       }
@@ -400,22 +457,10 @@
     "/featured": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/client"
-        },
-        {
-          "$ref": "#/components/parameters/client.version"
-        },
-        {
-          "$ref": "#/components/parameters/product"
-        },
-        {
           "$ref": "#/components/parameters/product.version"
         },
         {
           "$ref": "#/components/parameters/runtime.version"
-        },
-        {
-          "$ref": "#/components/parameters/platform.version"
         },
         {
           "$ref": "#/components/parameters/java.version"
@@ -424,81 +469,11 @@
           "$ref": "#/components/parameters/os"
         },
         {
-          "$ref": "#/components/parameters/ws"
-        },
-        {
-          "$ref": "#/components/parameters/nl"
+          "$ref": "#/components/parameters/locale"
         }
       ],
       "get": {
-        "summary": "Retrieve featured listings",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "listings": {
-                      "$ref": "#/components/schemas/Listings"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/related/{listingID}": {
-      "parameters": [
-        {
-          "in": "path",
-          "name": "listingID",
-          "required": true,
-          "description": "A list of comma-separated node ids for installed marketplace nodes, url-encoded.",
-          "schema": {
-            "$ref": "#/components/schemas/ObjectID"
-          }
-        },
-        {
-          "$ref": "#/components/parameters/client"
-        },
-        {
-          "$ref": "#/components/parameters/client.version"
-        },
-        {
-          "$ref": "#/components/parameters/product"
-        },
-        {
-          "$ref": "#/components/parameters/product.version"
-        },
-        {
-          "$ref": "#/components/parameters/runtime.version"
-        },
-        {
-          "$ref": "#/components/parameters/platform.version"
-        },
-        {
-          "$ref": "#/components/parameters/java.version"
-        },
-        {
-          "$ref": "#/components/parameters/os"
-        },
-        {
-          "$ref": "#/components/parameters/ws"
-        },
-        {
-          "$ref": "#/components/parameters/nl"
-        }
-      ],
-      "get": {
-        "summary": "Retrieve related listings",
+        "summary": "Featured listings",
         "responses": {
           "200": {
             "description": "Success",
@@ -525,24 +500,6 @@
   },
   "components": {
     "parameters": {
-      "client": {
-        "name": "client",
-        "in": "query",
-        "description": "The only valid value for the client variable is org.eclipse.epp.mpc.core. This variable is usually sent from MPC to alter the default list. It's available for the Most Popular Listings, Top Favorited Listings, Recently Updated Listings and Featured Listings. Only installable listings owned by an Eclipse member company will be returned.",
-        "required": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "client.version": {
-        "name": "client.version",
-        "in": "query",
-        "description": "The version of the client making the request",
-        "required": false,
-        "schema": {
-          "$ref": "#/components/schemas/osgiVersion"
-        }
-      },
       "product": {
         "name": "product",
         "in": "query",
@@ -570,15 +527,6 @@
           "$ref": "#/components/schemas/osgiVersion"
         }
       },
-      "platform.version": {
-        "name": "platform.version",
-        "in": "query",
-        "description": "(since Kepler/MPC 1.2) The version of the org.eclipse.platform bundle of the target Eclipse",
-        "required": false,
-        "schema": {
-          "$ref": "#/components/schemas/osgiVersion"
-        }
-      },
       "java.version": {
         "name": "java.version",
         "in": "query",
@@ -597,17 +545,8 @@
           "type": "string"
         }
       },
-      "ws": {
-        "name": "ws",
-        "in": "query",
-        "description": "Window system of the user.",
-        "required": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "nl": {
-        "name": "nl",
+      "locale": {
+        "name": "locale",
         "in": "query",
         "description": "Language code of the user's locale, e.g. `en_US` or `de_DE`.",
         "required": false,
@@ -758,17 +697,20 @@
           },
           "URL": {
             "type": "string",
-            "description": "URL to retrieve the category details."
+            "description": "URL to retrieve the tag details."
           }
+        }
+      },
+      "Categories": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Category"
         }
       },
       "Category": {
         "type": "object",
         "properties": {
           "id": {
-            "$ref": "#/components/schemas/ObjectID"
-          },
-          "marketID": {
             "$ref": "#/components/schemas/ObjectID"
           },
           "name": {
@@ -779,8 +721,11 @@
             "type": "string",
             "description": "URL to retrieve the category details."
           },
-          "node": {
-            "$ref": "#/components/schemas/Listing"
+          "marketIDs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectID"
+            }
           }
         }
       },
@@ -803,7 +748,7 @@
             "items": {
               "$ref": "#/components/schemas/Category"
             },
-            "description": "Array of categories in which this listing appears."
+            "description": "Array of categories that this market makes use of"
           }
         }
       },
@@ -854,58 +799,21 @@
           "dependenciesRepository": {
             "type": "string"
           },
-          "wizard": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string",
-                "description": "Title of Wizard"
-              },
-              "icon": {
-                "type": "string",
-                "description": "Absolute url"
-              },
-              "searchtab": {
-                "type": "object",
-                "description": "Search tab title",
-                "properties": {
-                  "enabled": {
-                    "type": "boolean",
-                    "description": "TRUE/FALSE"
-                  }
-                }
-              },
-              "populartab": {
-                "type": "object",
-                "description": "Popular tab title",
-                "properties": {
-                  "enabled": {
-                    "type": "boolean",
-                    "description": "TRUE/FALSE"
-                  }
-                }
-              },
-              "recenttab": {
-                "type": "object",
-                "description": "Recent tab title",
-                "properties": {
-                  "enabled": {
-                    "type": "boolean",
-                    "description": "TRUE/FALSE"
-                  }
-                }
-              },
-              "news": {
-                "type": "object",
-                "description": "News content URL.",
-                "properties": {
-                  "enabled": {
-                    "type": "boolean",
-                    "description": "TRUE/FALSE"
-                  }
-                }
-              }
-            }
+          "searchtab": {
+            "type": "boolean",
+            "description": "TRUE/FALSE"
+          },
+          "populartab": {
+            "type": "boolean",
+            "description": "TRUE/FALSE"
+          },
+          "recenttab": {
+            "type": "boolean",
+            "description": "TRUE/FALSE"
+          },
+          "news": {
+            "type": "boolean",
+            "description": "TRUE/FALSE"
           }
         }
       },

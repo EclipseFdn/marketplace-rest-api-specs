@@ -160,7 +160,7 @@
         }
       ],
       "get": {
-        "summary": "Listing retrieve",
+        "summary": "Listing",
         "responses": {
           "200": {
             "description": "Success",
@@ -309,7 +309,7 @@
     },
     "/catalogs": {
       "get": {
-        "summary": "Catalog List",
+        "summary": "Catalog list",
         "responses": {
           "200": {
             "description": "Success",
@@ -373,7 +373,7 @@
         }
       ],
       "get": {
-        "summary": "Catalog retrieve",
+        "summary": "Catalog",
         "responses": {
           "200": {
             "description": "Success",
@@ -460,7 +460,7 @@
         }
       ],
       "get": {
-        "summary": "Market retrieve",
+        "summary": "Market",
         "responses": {
           "200": {
             "description": "Success",
@@ -504,7 +504,7 @@
         }
       ],
       "get": {
-        "summary": "Category in context of market",
+        "summary": "Category by Market",
         "responses": {
           "200": {
             "description": "Success",
@@ -588,7 +588,7 @@
         }
       ],
       "get": {
-        "summary": "Catagory retrieve",
+        "summary": "Catagory",
         "responses": {
           "200": {
             "description": "Success",

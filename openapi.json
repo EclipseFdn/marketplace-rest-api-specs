@@ -478,7 +478,7 @@
         }
       }
     },
-    "/markets/{marketID}/categories/{$categoryID}": {
+    "/markets/{marketID}/categories/{categoryID}": {
       "parameters": [
         {
           "name": "marketID",
@@ -490,8 +490,37 @@
             "format": "int32",
             "minimum": 1
           }
+        },
+        {
+          "name": "categoryID",
+          "in": "path",
+          "description": "Unique ID of an individual category for market",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1
+          }
         }
-      ]
+      ],
+      "get": {
+        "summary": "Category in context of market",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Market"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error while retrieving data"
+          }
+        }
+      }
     },
     "/categories": {
       "get": {

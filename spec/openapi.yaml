@@ -108,7 +108,7 @@ paths:
       - $ref: "#/components/parameters/os"
       - $ref: "#/components/parameters/locale"
     get:
-      summary: Listing retrieve
+      summary: Listing
       responses:
         200:
           description: Success
@@ -197,7 +197,7 @@ paths:
           description: Invalid listing and version combination, no data found
   /catalogs:
     get:
-      summary: Catalog List
+      summary: Catalog list
       responses:
         200:
           description: Success
@@ -238,7 +238,7 @@ paths:
           format: int32
           minimum: 1
     get:
-      summary: Catalog retrieve
+      summary: Catalog
       responses:
         200:
           description: Success
@@ -294,7 +294,7 @@ paths:
           format: int32
           minimum: 1
     get:
-      summary: Market retrieve
+      summary: Market
       responses:
         200:
           description: Success
@@ -324,7 +324,7 @@ paths:
           format: int32
           minimum: 1
     get:
-      summary: Category in context of market
+      summary: Category by Market
       responses:
         200:
           description: Success
@@ -378,7 +378,7 @@ paths:
           format: int32
           minimum: 1
     get:
-      summary: Catagory retrieve
+      summary: Catagory
       responses:
         200:
           description: Success

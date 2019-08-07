@@ -17,7 +17,7 @@
   "paths": {
     "/listings": {
       "get": {
-        "summary": "Multiple listings",
+        "summary": "Listing list",
         "parameters": [
           {
             "$ref": "#/components/parameters/product.version"
@@ -99,7 +99,7 @@
         }
       },
       "put": {
-        "summary": "Update or post a new listing by ID",
+        "summary": "Listing update",
         "requestBody": {
           "description": "The listing to be updated or inserted into the data set.",
           "content": {
@@ -160,7 +160,7 @@
         }
       ],
       "get": {
-        "summary": "Listing by ID",
+        "summary": "Listing retrieve",
         "responses": {
           "200": {
             "description": "Success",
@@ -211,8 +211,8 @@
         }
       ],
       "get": {
-        "summary": "Retrieve install metrics for listing",
-        "description": "Retrieve install metrics for marketplace a listing by its unique ID. These stats will include available metrics for the last 12 months, as well as the overall install statistics. The parameters that are available for this call act as filters for the statistics, allowing for greater flexibility of analysis of the installation stats.",
+        "summary": "Installation list by Listing",
+        "description": "Retrieve install metrics for marketplace a listing by its unique ID. These stats will include available metrics for the last 12 months, as well as the overall install statistics. The parameters that are available for this call act as filters for the statistics, allowing for greater flexibility of analysis of the Installation stats.",
         "responses": {
           "200": {
             "description": "Success",
@@ -273,8 +273,8 @@
             "$ref": "#/components/parameters/country"
           }
         ],
-        "description": "Retrieve install metrics for the given marketplace listing and version by its unique listing ID and version number. These stats will include available metrics for the last 12 months, as well as the overall install statistics for the version. The parameters that are available for this call act as filters for the statistics, allowing for greater flexibility of analysis of the installation stats.",
-        "summary": "Retrieve install metrics for listing and version",
+        "description": "Retrieve install metrics for the given marketplace listing and version by its unique listing ID and version number. These stats will include available metrics for the last 12 months, as well as the overall install statistics for the version. The parameters that are available for this call act as filters for the statistics, allowing for greater flexibility of analysis of the Installation stats.",
+        "summary": "Installation list by Solution Version",
         "responses": {
           "200": {
             "description": "Success",
@@ -292,7 +292,7 @@
         }
       },
       "post": {
-        "summary": "Commit information about an install",
+        "summary": "Create Installation",
         "description": "Add information about an install. (Only accessible via the marketplace client)",
         "responses": {
           "200": {
@@ -309,7 +309,7 @@
     },
     "/catalogs": {
       "get": {
-        "summary": "Multiple catalogs",
+        "summary": "Catalog List",
         "responses": {
           "200": {
             "description": "Success",
@@ -327,7 +327,7 @@
         }
       },
       "put": {
-        "summary": "Update or post a new catalog by ID",
+        "summary": "Catalog update",
         "requestBody": {
           "description": "The catalog to be updated or inserted into the data set.",
           "content": {
@@ -373,7 +373,7 @@
         }
       ],
       "get": {
-        "summary": "Catalog by ID",
+        "summary": "Catalog retrieve",
         "responses": {
           "200": {
             "description": "Success",
@@ -396,7 +396,7 @@
     },
     "/markets": {
       "get": {
-        "summary": "Multiple markets",
+        "summary": "Market list",
         "responses": {
           "200": {
             "description": "Success",
@@ -414,7 +414,7 @@
         }
       },
       "put": {
-        "summary": "Update or post a new market by ID",
+        "summary": "Market update",
         "requestBody": {
           "description": "The market to be updated or inserted into the data set.",
           "content": {
@@ -460,7 +460,7 @@
         }
       ],
       "get": {
-        "summary": "Markets by ID",
+        "summary": "Market retrieve",
         "responses": {
           "200": {
             "description": "Success",
@@ -524,7 +524,7 @@
     },
     "/categories": {
       "get": {
-        "summary": "Multiple categories",
+        "summary": "Category list",
         "responses": {
           "200": {
             "description": "Success",
@@ -542,7 +542,7 @@
         }
       },
       "put": {
-        "summary": "Update or post a new category by ID",
+        "summary": "Category update",
         "requestBody": {
           "description": "The market to be updated or inserted into the data set.",
           "content": {
@@ -588,7 +588,7 @@
         }
       ],
       "get": {
-        "summary": "Catagory by ID",
+        "summary": "Catagory retrieve",
         "responses": {
           "200": {
             "description": "Success",
@@ -605,49 +605,6 @@
           },
           "500": {
             "description": "Error while retrieving data"
-          }
-        }
-      }
-    },
-    "/featured": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/product.version"
-        },
-        {
-          "$ref": "#/components/parameters/runtime.version"
-        },
-        {
-          "$ref": "#/components/parameters/java.version"
-        },
-        {
-          "$ref": "#/components/parameters/os"
-        },
-        {
-          "$ref": "#/components/parameters/locale"
-        }
-      ],
-      "get": {
-        "summary": "Featured listings",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "listings": {
-                      "$ref": "#/components/schemas/Listings"
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }

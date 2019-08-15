@@ -46,10 +46,7 @@
         "description": "Returns a list of marketplace listings that match the given parameters, filtering out solutions that don't match the filters.",
         "parameters": [
           {
-            "$ref": "#/components/parameters/product_version"
-          },
-          {
-            "$ref": "#/components/parameters/runtime_version"
+            "$ref": "#/components/parameters/platform_version"
           },
           {
             "$ref": "#/components/parameters/java_version"
@@ -58,16 +55,13 @@
             "$ref": "#/components/parameters/os"
           },
           {
-            "$ref": "#/components/parameters/locale"
-          },
-          {
             "$ref": "#/components/parameters/page"
           },
           {
-            "$ref": "#/components/parameters/page_size"
+            "$ref": "#/components/parameters/limit"
           },
           {
-            "name": "marketID",
+            "name": "market_id",
             "in": "query",
             "description": "The ID of the market to search in for listings",
             "required": false,
@@ -76,7 +70,7 @@
             }
           },
           {
-            "name": "categoryID",
+            "name": "category_id",
             "in": "query",
             "description": "The ID of the category to search in for listings",
             "required": false,
@@ -98,7 +92,7 @@
           {
             "name": "sort",
             "in": "query",
-            "description": "Optional query parameter to sort the resulting listings. This sort will be performed based on the field name passed, in either ascending or descending order based on which of ASC or DESC was passed after the field name separated by a space. \n \nAt this time, only a subset of whitelisted values are enabled for sorting, and only one of which can be used for sorting at a time. See below for a list of accepted fields.\n\n- installs_total\n- favorited\n- id\n- name\n- installs_recent\n- created\n- changed\n\nThis value should be in the format of `fieldname [ASC|DESC]`. For example, `installsrecent DESC`\n",
+            "description": "Optional query parameter to sort the resulting listings. This sort will be performed based on the field name passed, in either ascending or descending order based on which of ASC or DESC was passed after the field name separated by a space. \n \nAt this time, only a subset of whitelisted values are enabled for sorting, and only one of which can be used for sorting at a time. See below for a list of accepted fields.\n\n- install_count\n- install_count_recent\n- favorite_count\n- id\n- name\n- created\n- changed\n\nThis value should be in the format of `fieldname [ASC|DESC]`. For example, `installsrecent DESC`\n",
             "required": false,
             "schema": {
               "type": "string"
@@ -181,10 +175,10 @@
         }
       }
     },
-    "/listings/{listingID}": {
+    "/listings/{listing_id}": {
       "parameters": [
         {
-          "name": "listingID",
+          "name": "listing_id",
           "in": "path",
           "description": "Unique ID of an individual listing",
           "required": true,
@@ -195,19 +189,13 @@
           }
         },
         {
-          "$ref": "#/components/parameters/product_version"
-        },
-        {
-          "$ref": "#/components/parameters/runtime_version"
+          "$ref": "#/components/parameters/platform_version"
         },
         {
           "$ref": "#/components/parameters/java_version"
         },
         {
           "$ref": "#/components/parameters/os"
-        },
-        {
-          "$ref": "#/components/parameters/locale"
         }
       ],
       "get": {
@@ -236,10 +224,10 @@
         }
       }
     },
-    "/listings/{listingID}/installs": {
+    "/listings/{listing_id}/installs": {
       "parameters": [
         {
-          "name": "listingID",
+          "name": "listing_id",
           "in": "path",
           "description": "Unique ID of an individual listing",
           "required": true,
@@ -250,7 +238,7 @@
           }
         },
         {
-          "$ref": "#/components/parameters/product_version"
+          "$ref": "#/components/parameters/platform_version"
         },
         {
           "$ref": "#/components/parameters/java_version"
@@ -259,16 +247,13 @@
           "$ref": "#/components/parameters/os"
         },
         {
-          "$ref": "#/components/parameters/locale"
-        },
-        {
           "$ref": "#/components/parameters/country"
         },
         {
           "$ref": "#/components/parameters/page"
         },
         {
-          "$ref": "#/components/parameters/page_size"
+          "$ref": "#/components/parameters/limit"
         }
       ],
       "get": {
@@ -294,10 +279,10 @@
         }
       }
     },
-    "/listings/{listingID}/version/{versionNumber}/installs": {
+    "/listings/{listing_id}/version/{versionNumber}/installs": {
       "parameters": [
         {
-          "name": "listingID",
+          "name": "listing_id",
           "in": "path",
           "description": "Unique ID of an individual listing",
           "required": true,
@@ -325,7 +310,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/product_version"
+            "$ref": "#/components/parameters/platform_version"
           },
           {
             "$ref": "#/components/parameters/java_version"
@@ -334,16 +319,13 @@
             "$ref": "#/components/parameters/os"
           },
           {
-            "$ref": "#/components/parameters/locale"
-          },
-          {
             "$ref": "#/components/parameters/country"
           },
           {
             "$ref": "#/components/parameters/page"
           },
           {
-            "$ref": "#/components/parameters/page_size"
+            "$ref": "#/components/parameters/limit"
           }
         ],
         "description": "Retrieve install metrics for the given marketplace listing and version by its unique listing ID and version number. These stats will include available metrics for the last 12 months, as well as the overall install statistics for the version. The parameters that are available for this call act as filters for the statistics, allowing for greater flexibility of analysis of the Installation stats.",
@@ -494,7 +476,7 @@
             "$ref": "#/components/parameters/page"
           },
           {
-            "$ref": "#/components/parameters/page_size"
+            "$ref": "#/components/parameters/limit"
           }
         ],
         "responses": {
@@ -549,10 +531,10 @@
         }
       }
     },
-    "/markets/{marketID}": {
+    "/markets/{market_id}": {
       "parameters": [
         {
-          "name": "marketID",
+          "name": "market_id",
           "in": "path",
           "description": "Unique ID of an individual market",
           "required": true,
@@ -586,10 +568,10 @@
         }
       }
     },
-    "/markets/{marketID}/categories/{categoryID}": {
+    "/markets/{market_id}/categories/{category_id}": {
       "parameters": [
         {
-          "name": "marketID",
+          "name": "market_id",
           "in": "path",
           "description": "Unique ID of an individual market",
           "required": true,
@@ -600,7 +582,7 @@
           }
         },
         {
-          "name": "categoryID",
+          "name": "category_id",
           "in": "path",
           "description": "Unique ID of an individual category for market",
           "required": true,
@@ -614,7 +596,7 @@
           "$ref": "#/components/parameters/page"
         },
         {
-          "$ref": "#/components/parameters/page_size"
+          "$ref": "#/components/parameters/limit"
         }
       ],
       "get": {
@@ -650,7 +632,7 @@
             "$ref": "#/components/parameters/page"
           },
           {
-            "$ref": "#/components/parameters/page_size"
+            "$ref": "#/components/parameters/limit"
           }
         ],
         "summary": "Category list",
@@ -759,19 +741,10 @@
           "type": "string"
         }
       },
-      "product_version": {
-        "name": "product_version",
+      "platform_version": {
+        "name": "platform_version",
         "in": "query",
         "description": "The version of the running product of the target Eclipse, identical to the version of the product's branding plugin",
-        "required": false,
-        "schema": {
-          "$ref": "#/components/schemas/osgiVersion"
-        }
-      },
-      "runtime_version": {
-        "name": "runtime_version",
-        "in": "query",
-        "description": "The version of the org.eclipse.core.runtime bundle of the target Eclipse",
         "required": false,
         "schema": {
           "$ref": "#/components/schemas/osgiVersion"
@@ -795,15 +768,6 @@
           "type": "string"
         }
       },
-      "locale": {
-        "name": "locale",
-        "in": "query",
-        "description": "Language code of the user's locale, e.g. `en_US` or `de_DE`.",
-        "required": false,
-        "schema": {
-          "type": "string"
-        }
-      },
       "country": {
         "name": "country",
         "in": "query",
@@ -822,8 +786,8 @@
           "type": "integer"
         }
       },
-      "page_size": {
-        "name": "page_size",
+      "limit": {
+        "name": "limit",
         "in": "query",
         "description": "The size of result sets returned (maximum: 50, default: 10)",
         "required": false,
@@ -839,7 +803,7 @@
           "id": {
             "$ref": "#/components/schemas/ObjectID"
           },
-          "name": {
+          "title": {
             "type": "string",
             "description": "Listing Title"
           },
@@ -857,23 +821,27 @@
             },
             "description": "Array of tags that this listing appears."
           },
-          "owner": {
+          "authors": {
             "type": "string",
             "description": "Name of the author"
           },
-          "favorited": {
+          "favorite_count": {
             "type": "integer",
-            "description": "Number of times a listing was favorited"
+            "description": "Number of times a listing was add to a favorite list."
           },
-          "installs_total": {
+          "install_count": {
             "type": "integer",
             "description": "Install count"
           },
-          "installs_recent": {
+          "install_count_recent": {
             "type": "integer",
             "description": "Install count for the last month"
           },
-          "short_description": {
+          "install_ranking": {
+            "type": "string",
+            "description": "Relative install_ranking of the given listing."
+          },
+          "teaser": {
             "type": "string",
             "description": "Listing teaser"
           },
@@ -897,7 +865,7 @@
             "type": "string",
             "description": "Listing URL website"
           },
-          "image": {
+          "logo": {
             "type": "string",
             "description": "Logo absolute URL"
           },
@@ -905,9 +873,9 @@
             "type": "string",
             "description": "Listing license"
           },
-          "company_name": {
+          "organization": {
             "type": "string",
-            "description": "Company name"
+            "description": "Organization name"
           },
           "status": {
             "type": "string",
@@ -929,10 +897,6 @@
           "update_url": {
             "type": "string",
             "description": "Update site URL"
-          },
-          "ranking": {
-            "type": "string",
-            "description": "Relative ranking of the given listing."
           },
           "ius": {
             "type": "array",
@@ -972,7 +936,7 @@
           "id": {
             "$ref": "#/components/schemas/ObjectID"
           },
-          "name": {
+          "title": {
             "type": "string",
             "description": "Tag Title"
           },
@@ -994,7 +958,7 @@
           "id": {
             "$ref": "#/components/schemas/ObjectID"
           },
-          "name": {
+          "title": {
             "type": "string",
             "description": "Category title"
           },
@@ -1016,11 +980,11 @@
           "id": {
             "$ref": "#/components/schemas/ObjectID"
           },
-          "name": {
+          "title": {
             "type": "string",
             "description": "Listing Title"
           },
-          "URL": {
+          "url": {
             "type": "string",
             "description": "URL to retrieve the category details."
           },
@@ -1059,7 +1023,7 @@
           },
           "title": {
             "type": "string",
-            "description": "Name of catalog"
+            "description": "title of catalog"
           },
           "url": {
             "type": "string",
@@ -1112,11 +1076,11 @@
       "sort_whitelist": {
         "type": "string",
         "enum": [
-          "installs_total",
-          "favorited",
+          "install_count",
+          "install_count_recent",
+          "favorite_count",
           "id",
           "name",
-          "installs_recent",
           "created",
           "changed"
         ]
@@ -1154,11 +1118,11 @@
               }
             }
           },
-          "installs_recent": {
+          "install_count_recent": {
             "type": "number",
             "description": "The number of installs in the last month for the given resource"
           },
-          "installs_total": {
+          "install_count": {
             "type": "number",
             "description": "The number of historic installs for the given resource"
           }

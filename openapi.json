@@ -14,25 +14,57 @@
       "description": "Production endpoint for Eclipse Marketplace API"
     }
   ],
+  "tags": [
+    {
+      "name": "Listings",
+      "description": "Definitions for marketplace listings and their versions"
+    },
+    {
+      "name": "Catalogs",
+      "description": "Marketplace catalog definitions"
+    },
+    {
+      "name": "Categories",
+      "description": "Market categories"
+    },
+    {
+      "name": "Installs",
+      "description": "Access to listing install stats"
+    },
+    {
+      "name": "Markets",
+      "description": "Information about available markets"
+    }
+  ],
   "paths": {
     "/listings": {
       "get": {
+        "tags": [
+          "Listings"
+        ],
         "summary": "Listing list",
+        "description": "Returns a list of marketplace listings that match the given parameters, filtering out solutions that don't match the filters.",
         "parameters": [
           {
-            "$ref": "#/components/parameters/product.version"
+            "$ref": "#/components/parameters/product_version"
           },
           {
-            "$ref": "#/components/parameters/runtime.version"
+            "$ref": "#/components/parameters/runtime_version"
           },
           {
-            "$ref": "#/components/parameters/java.version"
+            "$ref": "#/components/parameters/java_version"
           },
           {
             "$ref": "#/components/parameters/os"
           },
           {
             "$ref": "#/components/parameters/locale"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/page_size"
           },
           {
             "name": "marketID",
@@ -53,12 +85,12 @@
             }
           },
           {
-            "name": "licenseType",
+            "name": "license_type",
             "in": "query",
             "description": "Optional query parameter to filter the results by license type.\nThe result will be a union of all included license types. \nValid values include:\n\n* COMMERCIAL \n* OPEN_SOURCE \n* EPL\n* EPL 1.0  \n* EPL 2.0  \n* GPL  \n",
             "required": false,
             "schema": {
-              "$ref": "#/components/schemas/licenseType"
+              "$ref": "#/components/schemas/license_type"
             },
             "style": "form",
             "explode": true
@@ -66,17 +98,32 @@
           {
             "name": "sort",
             "in": "query",
-            "description": "Optional query parameter to sort the resulting listings. This sort will be performed based on the field name passed, leaving the values unsorted if there is no field name that matches",
+            "description": "Optional query parameter to sort the resulting listings. This sort will be performed based on the field name passed, in either ascending or descending order based on which of ASC or DESC was passed after the field name separated by a space. \n \nAt this time, only a subset of whitelisted values are enabled for sorting, and only one of which can be used for sorting at a time. See below for a list of accepted fields.\n\n- installs_total\n- favorited\n- id\n- name\n- installs_recent\n- created\n- changed\n\nThis value should be in the format of `fieldname [ASC|DESC]`. For example, `installsrecent DESC`\n",
             "required": false,
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "order",
+            "name": "featured",
             "in": "query",
-            "description": "Optional query parameter to order the resulting listings. This sort will be performed based on the field name passed, leaving the values unsorted if there is no field name that matches",
-            "required": false,
+            "description": "If set to true, will randomize results based on a random seed and ignore sort clauses.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Search term to use when narrowing down results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Comma-delimited list of listing IDs to retrieve for the call.",
             "schema": {
               "type": "string"
             }
@@ -99,7 +146,11 @@
         }
       },
       "put": {
+        "tags": [
+          "Listings"
+        ],
         "summary": "Listing update",
+        "description": "Using the passed listing object, updates, or in the case of new data inserts, are made in the data set to include the new information.",
         "requestBody": {
           "description": "The listing to be updated or inserted into the data set.",
           "content": {
@@ -144,13 +195,13 @@
           }
         },
         {
-          "$ref": "#/components/parameters/product.version"
+          "$ref": "#/components/parameters/product_version"
         },
         {
-          "$ref": "#/components/parameters/runtime.version"
+          "$ref": "#/components/parameters/runtime_version"
         },
         {
-          "$ref": "#/components/parameters/java.version"
+          "$ref": "#/components/parameters/java_version"
         },
         {
           "$ref": "#/components/parameters/os"
@@ -160,7 +211,11 @@
         }
       ],
       "get": {
+        "tags": [
+          "Listings"
+        ],
         "summary": "Listing",
+        "description": "Returns a single listing that has a matching listing ID, filtering out versions that do not match the passed parameters.",
         "responses": {
           "200": {
             "description": "Success",
@@ -195,10 +250,10 @@
           }
         },
         {
-          "$ref": "#/components/parameters/product.version"
+          "$ref": "#/components/parameters/product_version"
         },
         {
-          "$ref": "#/components/parameters/java.version"
+          "$ref": "#/components/parameters/java_version"
         },
         {
           "$ref": "#/components/parameters/os"
@@ -208,9 +263,18 @@
         },
         {
           "$ref": "#/components/parameters/country"
+        },
+        {
+          "$ref": "#/components/parameters/page"
+        },
+        {
+          "$ref": "#/components/parameters/page_size"
         }
       ],
       "get": {
+        "tags": [
+          "Installs"
+        ],
         "summary": "Installation list by Listing",
         "description": "Retrieve install metrics for marketplace a listing by its unique ID. These stats will include available metrics for the last 12 months, as well as the overall install statistics. The parameters that are available for this call act as filters for the statistics, allowing for greater flexibility of analysis of the Installation stats.",
         "responses": {
@@ -256,12 +320,15 @@
         }
       ],
       "get": {
+        "tags": [
+          "Installs"
+        ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/product.version"
+            "$ref": "#/components/parameters/product_version"
           },
           {
-            "$ref": "#/components/parameters/java.version"
+            "$ref": "#/components/parameters/java_version"
           },
           {
             "$ref": "#/components/parameters/os"
@@ -271,6 +338,12 @@
           },
           {
             "$ref": "#/components/parameters/country"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/page_size"
           }
         ],
         "description": "Retrieve install metrics for the given marketplace listing and version by its unique listing ID and version number. These stats will include available metrics for the last 12 months, as well as the overall install statistics for the version. The parameters that are available for this call act as filters for the statistics, allowing for greater flexibility of analysis of the Installation stats.",
@@ -292,6 +365,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Installs"
+        ],
         "summary": "Create Installation",
         "description": "Add information about an install. (Only accessible via the marketplace client)",
         "responses": {
@@ -309,7 +385,11 @@
     },
     "/catalogs": {
       "get": {
+        "tags": [
+          "Catalogs"
+        ],
         "summary": "Catalog list",
+        "description": "Retrieves information about the catalogs available in the marketplace.",
         "responses": {
           "200": {
             "description": "Success",
@@ -327,7 +407,11 @@
         }
       },
       "put": {
+        "tags": [
+          "Catalogs"
+        ],
         "summary": "Catalog update",
+        "description": "Add or update information about a catalog in the marketplace.",
         "requestBody": {
           "description": "The catalog to be updated or inserted into the data set.",
           "content": {
@@ -373,7 +457,11 @@
         }
       ],
       "get": {
+        "tags": [
+          "Catalogs"
+        ],
         "summary": "Catalog",
+        "description": "Retrieve information on a single catalog, matching on the catalog ID.",
         "responses": {
           "200": {
             "description": "Success",
@@ -396,7 +484,19 @@
     },
     "/markets": {
       "get": {
+        "tags": [
+          "Markets"
+        ],
         "summary": "Market list",
+        "description": "Retrieves a listing of markets available within the marketplace.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/page_size"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -414,7 +514,11 @@
         }
       },
       "put": {
+        "tags": [
+          "Markets"
+        ],
         "summary": "Market update",
+        "description": "Add or update information about a market in the marketplace.",
         "requestBody": {
           "description": "The market to be updated or inserted into the data set.",
           "content": {
@@ -460,7 +564,11 @@
         }
       ],
       "get": {
+        "tags": [
+          "Markets"
+        ],
         "summary": "Market",
+        "description": "Retrieve a single market within the marketplace, matching on its ID.",
         "responses": {
           "200": {
             "description": "Success",
@@ -501,10 +609,20 @@
             "format": "int32",
             "minimum": 1
           }
+        },
+        {
+          "$ref": "#/components/parameters/page"
+        },
+        {
+          "$ref": "#/components/parameters/page_size"
         }
       ],
       "get": {
+        "tags": [
+          "Categories"
+        ],
         "summary": "Category by Market",
+        "description": "Retrieves a category in context of its market in the marketplace.",
         "responses": {
           "200": {
             "description": "Success",
@@ -524,7 +642,19 @@
     },
     "/categories": {
       "get": {
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/page_size"
+          }
+        ],
         "summary": "Category list",
+        "description": "Retrieves a listing of categories available within the marketplace.",
         "responses": {
           "200": {
             "description": "Success",
@@ -542,7 +672,11 @@
         }
       },
       "put": {
+        "tags": [
+          "Categories"
+        ],
         "summary": "Category update",
+        "description": "Add or update information about a category in the marketplace.",
         "requestBody": {
           "description": "The market to be updated or inserted into the data set.",
           "content": {
@@ -559,7 +693,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Catalog"
+                  "$ref": "#/components/schemas/Category"
                 }
               }
             }
@@ -588,14 +722,18 @@
         }
       ],
       "get": {
+        "tags": [
+          "Categories"
+        ],
         "summary": "Catagory",
+        "description": "Retrieves a category available within the marketplace, matched on its ID.",
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Catalog"
+                  "$ref": "#/components/schemas/Category"
                 }
               }
             }
@@ -621,8 +759,8 @@
           "type": "string"
         }
       },
-      "product.version": {
-        "name": "product.version",
+      "product_version": {
+        "name": "product_version",
         "in": "query",
         "description": "The version of the running product of the target Eclipse, identical to the version of the product's branding plugin",
         "required": false,
@@ -630,8 +768,8 @@
           "$ref": "#/components/schemas/osgiVersion"
         }
       },
-      "runtime.version": {
-        "name": "runtime.version",
+      "runtime_version": {
+        "name": "runtime_version",
         "in": "query",
         "description": "The version of the org.eclipse.core.runtime bundle of the target Eclipse",
         "required": false,
@@ -639,8 +777,8 @@
           "$ref": "#/components/schemas/osgiVersion"
         }
       },
-      "java.version": {
-        "name": "java.version",
+      "java_version": {
+        "name": "java_version",
         "in": "query",
         "description": "The version of the JRE running the target Eclipse, as returned by the JRE's `System.getProperty(\"java.version\")`",
         "required": false,
@@ -673,6 +811,24 @@
         "required": false,
         "schema": {
           "type": "string"
+        }
+      },
+      "page": {
+        "name": "page",
+        "in": "query",
+        "description": "The current page in pagination for results",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "page_size": {
+        "name": "page_size",
+        "in": "query",
+        "description": "The size of result sets returned (maximum: 50, default: 10)",
+        "required": false,
+        "schema": {
+          "type": "integer"
         }
       }
     },
@@ -709,15 +865,15 @@
             "type": "integer",
             "description": "Number of times a listing was favorited"
           },
-          "installstotal": {
+          "installs_total": {
             "type": "integer",
             "description": "Install count"
           },
-          "installsrecent": {
+          "installs_recent": {
             "type": "integer",
             "description": "Install count for the last month"
           },
-          "shortdescription": {
+          "short_description": {
             "type": "string",
             "description": "Listing teaser"
           },
@@ -733,11 +889,11 @@
             "type": "integer",
             "description": "Timestamp"
           },
-          "foundationmember": {
+          "foundation_member": {
             "type": "boolean",
             "description": "TRUE/FALSE"
           },
-          "homepageurl": {
+          "homepage_url": {
             "type": "string",
             "description": "Listing URL website"
           },
@@ -749,7 +905,7 @@
             "type": "string",
             "description": "Listing license"
           },
-          "companyname": {
+          "company_name": {
             "type": "string",
             "description": "Company name"
           },
@@ -757,7 +913,7 @@
             "type": "string",
             "description": "Release status"
           },
-          "supporturl": {
+          "support_url": {
             "type": "string",
             "description": "Support/documentation URL"
           },
@@ -765,14 +921,18 @@
             "type": "string",
             "description": "Version name"
           },
-          "eclipseversion": {
+          "eclipse_version": {
             "type": "number",
             "format": "float",
             "description": "Eclipse release number (4.5, 4.4...)"
           },
-          "updateurl": {
+          "update_url": {
             "type": "string",
             "description": "Update site URL"
+          },
+          "ranking": {
+            "type": "string",
+            "description": "Relative ranking of the given listing."
           },
           "ius": {
             "type": "array",
@@ -816,7 +976,7 @@
             "type": "string",
             "description": "Tag Title"
           },
-          "URL": {
+          "url": {
             "type": "string",
             "description": "URL to retrieve the tag details."
           }
@@ -838,11 +998,11 @@
             "type": "string",
             "description": "Category title"
           },
-          "URL": {
+          "url": {
             "type": "string",
             "description": "URL to retrieve the category details."
           },
-          "marketIDs": {
+          "market_ids": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ObjectID"
@@ -905,7 +1065,7 @@
             "type": "string",
             "description": "Url prefix of the marketplace catalog"
           },
-          "selfContained": {
+          "self_contained": {
             "type": "boolean",
             "description": "TRUE/FALSE"
           },
@@ -917,20 +1077,20 @@
             "type": "string",
             "description": "Short description"
           },
-          "dependenciesRepository": {
+          "dependencies_repository": {
             "type": "string"
           },
-          "searchtab": {
-            "type": "boolean",
-            "description": "TRUE/FALSE"
+          "search_tab": {
+            "type": "string",
+            "description": "URL to populate tab if it exists, or empty"
           },
-          "populartab": {
-            "type": "boolean",
-            "description": "TRUE/FALSE"
+          "popular_tab": {
+            "type": "string",
+            "description": "URL to populate tab if it exists, or empty"
           },
-          "recenttab": {
-            "type": "boolean",
-            "description": "TRUE/FALSE"
+          "recent_tab": {
+            "type": "string",
+            "description": "URL to populate tab if it exists, or empty"
           },
           "news": {
             "type": "boolean",
@@ -938,7 +1098,7 @@
           }
         }
       },
-      "licenseType": {
+      "license_type": {
         "type": "string",
         "enum": [
           "COMMERCIAL",
@@ -949,33 +1109,58 @@
           "GPL"
         ]
       },
+      "sort_whitelist": {
+        "type": "string",
+        "enum": [
+          "installs_total",
+          "favorited",
+          "id",
+          "name",
+          "installs_recent",
+          "created",
+          "changed"
+        ]
+      },
       "osgiVersion": {
         "type": "number",
         "format": "float",
         "description": "Describes the version of OSGi the given platform is using"
       },
       "Installs": {
-        "type": "array",
-        "minItems": 13,
-        "items": {
-          "type": "object",
-          "properties": {
-            "start": {
-              "type": "string",
-              "format": "datetime",
-              "description": "Start date for the range of counted installs"
-            },
-            "end": {
-              "type": "string",
-              "format": "datetime",
-              "description": "End date for the range of counted installs"
-            },
-            "count": {
-              "description": "Number of installs in the given period for the given version",
-              "type": "integer",
-              "format": "int32",
-              "minimum": 0
+        "type": "object",
+        "properties": {
+          "monthly_stats": {
+            "type": "array",
+            "minItems": 11,
+            "items": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "string",
+                  "format": "datetime",
+                  "description": "Start date for the range of counted installs in RFC 3339 format. Example, `1990-12-31T15:59:60-08:00`.\n\nMore on this standard can be read at https://tools.ietf.org/html/rfc3339.\n"
+                },
+                "end": {
+                  "type": "string",
+                  "format": "datetime",
+                  "description": "End date for the range of counted installs"
+                },
+                "count": {
+                  "description": "Number of installs in the given period for the given version in RFC 3339 format. Example, `1990-12-31T15:59:60-08:00`.\n\nMore on this standard can be read at https://tools.ietf.org/html/rfc3339.\n",
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": 0
+                }
+              }
             }
+          },
+          "installs_recent": {
+            "type": "number",
+            "description": "The number of installs in the last month for the given resource"
+          },
+          "installs_total": {
+            "type": "number",
+            "description": "The number of historic installs for the given resource"
           }
         }
       }

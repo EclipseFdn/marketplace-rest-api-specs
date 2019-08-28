@@ -556,8 +556,17 @@ components:
             $ref: "#/components/schemas/Tag"
           description: Array of tags that this listing appears.
         authors:
-          type: string
-          description: Name of the author
+          description: Individuals involved with the development of the listing
+          type: array
+          items:
+            type: object
+            properties:
+              full_name:
+                type: string
+                description: Name of the author
+              username:
+                type: string
+                description: Eclipse Foundation username of the author
         favorite_count:
           type: integer
           description: Number of times a listing was add to a favorite list.
@@ -595,41 +604,25 @@ components:
           type: string
           description: Listing license
         organization:
-          type: string
-          description: Organization name
+          type: array
+          description: Organizations involved with the development of the listing
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Organization name
+              id:
+                $ref: "#/components/schemas/ObjectID"
+                description: Organizational member ID
         status:
           type: string
           description: Release status
         support_url:
           type: string
           description: Support/documentation URL
-        version:
-          type: string
-          description: Version name
-        eclipse_version:
-          type: number
-          format: float
-          description: Eclipse release number (4.5, 4.4...)
-        update_url:
-          type: string
-          description: Update site URL
-        ius:
-          type: array
-          items:
-            type: object
-            description: Feature ID's are used by the Eclipse Marketplace Client (MPC) to determine which features to install for your listing https://marketplace-staging.eclipse.org/feature-how-to
-            properties:
-              required:
-                type: string
-                description: TRUE or FALSE
-              selected:
-                type: string
-                description: TRUE or FALSE
-        platforms:
-          type: array
-          items:
-            type: string
-            description: Compatible OS (Windows, Mac, Linux/GTK)
+        versions:
+          $ref: "#/components/schemas/SolutionVersions"
 
     Listings:
       type: array
@@ -762,7 +755,46 @@ components:
       type: number
       format: float
       description: Describes the version of OSGi the given platform is using
-      
+    
+    SolutionVersions:
+      type: object
+      properties:
+        version:
+          type: string
+          description: Version name string
+        update_site_url:
+          type: string
+          description: Update site URL
+        eclipse_versions:
+          type: array
+          description: Eclipse release number (4.5, 4.4...)
+          items:
+            type: string
+        platforms:
+          type: array
+          description: Compatible OS (Windows, Mac, Linux/GTK)
+          items:
+            type: string
+        min_java_version:
+          type: string
+          description: The minimum Java version required to run the given solution
+        feature_ids:
+          type: array
+          description: Describes additional feature packages available for install with the current version
+          items:
+            type: object
+            properties:
+              feature_id:
+                type: string
+                description: The ID of the feature for the solution
+              install_state:
+                type: string
+                description: Whether the feature is required, optional, or recommended.
+                enum:
+                  - optional
+                  - required
+                  - optional_selected
+    
     Installs:
       type: object
       properties:

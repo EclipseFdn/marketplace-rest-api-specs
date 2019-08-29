@@ -121,6 +121,14 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Comma-delimited list of tag names to filter results for.",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1025,6 +1033,10 @@
             "type": "boolean",
             "description": "TRUE/FALSE"
           },
+          "search_enabled": {
+            "type": "boolean",
+            "description": "TRUE/FALSE"
+          },
           "icon": {
             "type": "string",
             "description": "Absolute url"
@@ -1036,21 +1048,31 @@
           "dependencies_repository": {
             "type": "string"
           },
-          "search_tab": {
-            "type": "string",
-            "description": "URL to populate tab if it exists, or empty"
-          },
-          "popular_tab": {
-            "type": "string",
-            "description": "URL to populate tab if it exists, or empty"
-          },
-          "recent_tab": {
-            "type": "string",
-            "description": "URL to populate tab if it exists, or empty"
-          },
-          "news": {
-            "type": "boolean",
-            "description": "TRUE/FALSE"
+          "tabs": {
+            "type": "array",
+            "description": "List of tabs to be included within a catalog",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "Name of the tab to display"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "URL for default content of the tab"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "Type of tab, can either be a default tab, a search tab, or an embedded content tab",
+                  "enum": [
+                    "default",
+                    "search",
+                    "embedded"
+                  ]
+                }
+              }
+            }
           }
         }
       },

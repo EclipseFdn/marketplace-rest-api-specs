@@ -1106,6 +1106,9 @@
             "items": {
               "type": "object",
               "properties": {
+                "id": {
+                  "$ref": "#/components/schemas/ObjectID"
+                },
                 "full_name": {
                   "type": "string",
                   "description": "Name of the author"
@@ -1260,9 +1263,16 @@
           "categories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Category"
+              "$ref": "#/components/schemas/Categories"
             },
-            "description": "Array of categories that this market makes use of"
+            "description": "Array of categories that are used for the current market"
+          },
+          "listing_ids": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectID"
+            },
+            "description": "Array of listing IDs that should be used for the current market"
           }
         }
       },

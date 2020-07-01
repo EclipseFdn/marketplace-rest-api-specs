@@ -30,6 +30,7 @@ paths:
     get:
       tags:
         - Listings
+      operationId: get-listings
       summary: Listing list
       description: Returns a list of marketplace listings that match the given parameters, filtering out solutions that don't match the filters.
       parameters:
@@ -125,6 +126,7 @@ paths:
     put:
       tags:
         - Listings
+      operationId: put-listing
       summary: Listing update
       description: Using the passed listing object, updates, or in the case of new data inserts, are made in the data set to include the new information. User must be authorized to update items to access this endpoint.
       requestBody:
@@ -159,6 +161,7 @@ paths:
     get:
       tags:
         - Listings
+      operationId: get-listing
       summary: Listing
       description: Returns a single listing that has a matching listing ID, filtering out versions that do not match the passed parameters.
       responses:
@@ -175,6 +178,7 @@ paths:
     delete:
       tags:
         - Listings
+      operationId: delete-listing
       summary: Delete listing
       description: Deletes a single listing that has a matching ID. User must be authorized to delete items to access this endpoint.
       responses:
@@ -187,6 +191,7 @@ paths:
     get:
       tags:
         - Listing Versions
+      operationId: get-listing-versions
       summary: Listing version list
       description: Retrieves a list of listing versions available within the marketplace.
       parameters:
@@ -204,6 +209,7 @@ paths:
     put:
       tags:
         - Listing Versions
+      operationId: put-listing-version
       summary: Listing version update
       description: Add or update information about a listing version in the marketplace. User must be authorized to update items to access this endpoint.
       requestBody:
@@ -229,6 +235,7 @@ paths:
     get:
       tags:
         - Listing Versions
+      operationId: get-listing-version
       summary: Listing Version
       description: Retrieve a single listing version within the marketplace, matching on its ID.
       responses:
@@ -243,6 +250,7 @@ paths:
     delete:
       tags:
         - Listing Versions
+      operationId: delete-listing-version
       summary: Delete Listing version
       description: Deletes a single listing version that has a matching ID. User must be authorized to delete items to access this endpoint.
       responses:
@@ -270,6 +278,7 @@ paths:
     get:
       tags:
         - Installs
+      operationId: get-installs
       summary: Installation count by listing ID
       description: Retrieve count of installs for marketplace a listing by its unique ID. The parameters that are available for this call act as filters for the statistics, allowing for greater flexibility of analysis of the Installation stats.
       responses:
@@ -293,6 +302,7 @@ paths:
     get:
       tags:
         - Installs
+      operationId: get-install-metrics
       summary: Install metrics by listing ID
       description: Retrieve install metrics for a marketplace listing by listing ID.
       responses:
@@ -327,6 +337,7 @@ paths:
         - $ref: "#/components/parameters/java_version"
         - $ref: "#/components/parameters/os"
         - $ref: "#/components/parameters/country"
+      operationId: get-installs-for-version
       description: Retrieve number of installs for the given marketplace listing and version by its unique listing ID and version number. The parameters that are available for this call act as filters for the statistics, allowing for greater flexibility of analysis of the Installation stats.
       summary: Count of installs for given listing version install
       responses:
@@ -341,6 +352,7 @@ paths:
     post:
       tags:
         - Installs
+      operationId: post-install
       summary: Create Installation
       description: Add information about an install. (Only accessible via the marketplace client)
       responses:
@@ -355,6 +367,7 @@ paths:
     get:
       tags:
         - Catalogs
+      operationId: get-catalogs
       summary: Catalog list
       description: Retrieves information about the catalogs available in the marketplace.
       responses:
@@ -369,6 +382,7 @@ paths:
     put:
       tags:
         - Catalogs
+      operationId: put-catalog
       summary: Catalog update
       description: Add or update information about a catalog in the marketplace. User must be authorized to update items to access this endpoint.
       requestBody:
@@ -400,6 +414,7 @@ paths:
     get:
       tags:
         - Catalogs
+      operationId: get-catalog
       summary: Catalog
       description: Retrieve information on a single catalog, matching on the catalog ID.
       responses:
@@ -416,6 +431,7 @@ paths:
     delete:
       tags:
         - Catalogs
+      operationId: delete-catalog
       summary: Delete catalog
       description: Deletes a single listing that has a matching ID. User must be authorized to delete items to access this endpoint.
       responses:
@@ -430,6 +446,7 @@ paths:
     get:
       tags:
         - Markets
+      operationId: get-markets
       summary: Market list
       description: Retrieves a listing of markets available within the marketplace.
       parameters:
@@ -447,6 +464,7 @@ paths:
     put:
       tags:
         - Markets
+      operationId: put-market
       summary: Market update
       description: Add or update information about a market in the marketplace. User must be authorized to update items to access this endpoint.
       requestBody:
@@ -472,6 +490,7 @@ paths:
     get:
       tags:
         - Markets
+      operationId: get-market
       summary: Market
       description: Retrieve a single market within the marketplace, matching on its ID.
       responses:
@@ -486,6 +505,7 @@ paths:
     delete:
       tags:
         - Markets
+      operationId: delete-market
       summary: Delete Market
       description: Deletes a single market that has a matching ID. User must be authorized to delete items to access this endpoint.
       responses:
@@ -503,6 +523,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/limit"
+      operationId: get-categories
       summary: Category list
       description: Retrieves a listing of categories available within the marketplace.
       responses:
@@ -517,6 +538,7 @@ paths:
     put:
       tags:
         - Categories
+      operationId: put-category
       summary: Category update
       description: Add or update information about a category in the marketplace. User must be authorized to update items to access this endpoint.
       requestBody:
@@ -548,6 +570,7 @@ paths:
     get:
       tags:
         - Categories
+      operationId: get-category
       summary: Category
       description: Retrieves a category available within the marketplace, matched on its ID.
       responses:
@@ -564,6 +587,7 @@ paths:
     delete:
       tags:
         - Categories
+      operationId: delete-category
       summary: Delete category
       description: Deletes a single category that has a matching ID. User must be authorized to delete items to access this endpoint.
       responses:
@@ -581,6 +605,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/limit"
+      operationId: get-error-reports
       summary: Error reports list
       description: Retrieves a list of error reports available within the marketplace.
       responses:
@@ -595,6 +620,7 @@ paths:
     put:
       tags:
         - Error reports
+      operationId: put-error-report
       summary: Error reports update
       description: Add or update information about a error report in the marketplace. User must be authorized to update items to access this endpoint.
       requestBody:
@@ -624,6 +650,7 @@ paths:
     get:
       tags:
         - Error reports
+      operationId: get-error-report
       summary: Error report
       description: Retrieves an error report available within the marketplace, matched on its ID.
       responses:
@@ -640,6 +667,7 @@ paths:
     delete:
       tags:
         - Error reports
+      operationId: delete-error-report
       summary: Delete error report
       description: Deletes a single error report that has a matching ID. User must be authorized to delete items to access this endpoint.
       responses:

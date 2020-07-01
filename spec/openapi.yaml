@@ -548,7 +548,7 @@ paths:
     get:
       tags:
         - Categories
-      summary: Catagory
+      summary: Category
       description: Retrieves a category available within the marketplace, matched on its ID.
       responses:
         200:
@@ -744,16 +744,7 @@ components:
           description: Individuals involved with the development of the listing
           type: array
           items:
-            type: object
-            properties:
-              id:
-                $ref: "#/components/schemas/ObjectID"
-              full_name:
-                type: string
-                description: Name of the author
-              username:
-                type: string
-                description: Eclipse Foundation username of the author
+            $ref: "#/components/schemas/Account"
         favorite_count:
           type: integer
           description: Number of times a listing was add to a favorite list.
@@ -791,15 +782,8 @@ components:
           type: string
           description: Listing license
         organization:
-          type: object
+          $ref: "#/components/schemas/Organization"
           description: Organizations involved with the development of the listing
-          properties:
-            name:
-              type: string
-              description: Organization name
-            id:
-              $ref: "#/components/schemas/ObjectID"
-              description: Organizational member ID
         status:
           type: string
           description: Release status
@@ -818,6 +802,28 @@ components:
       type: array
       items: 
         $ref: "#/components/schemas/Listing"
+
+    Account:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ObjectID"
+        full_name:
+          type: string
+          description: Name of the author
+        username:
+          type: string
+          description: Eclipse Foundation username for the account
+
+    Organization:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Organization name
+        id:
+          $ref: "#/components/schemas/ObjectID"
+          description: Organizational member ID
 
     Tag:
       type: object
@@ -914,22 +920,25 @@ components:
           type: array
           description: List of tabs to be included within a catalog
           items:
-            type: object
-            properties:
-              title:
-                type: string
-                description: Name of the tab to display
-              url:
-                type: string
-                description: URL for default content of the tab
-              type:
-                type: string
-                description: Type of tab, can either be a default tab, a search tab, or an embedded content tab
-                enum:
-                  - default
-                  - search
-                  - embedded
-            
+            $ref: "#/components/schemas/CatalogTab"
+
+    CatalogTab:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Name of the tab to display
+        url:
+          type: string
+          description: URL for default content of the tab
+        type:
+          type: string
+          description: Type of tab, can either be a default tab, a search tab, or an embedded content tab
+          enum:
+            - default
+            - search
+            - embedded
+
     license_type:
       type: string
       enum:
@@ -967,7 +976,7 @@ components:
         id:
           $ref: "#/components/schemas/ObjectID"
         listing_id:
-          description: The listing ID this solution version represents
+          description: The listing ID this listing version represents
           $ref: "#/components/schemas/ObjectID"
         version:
           type: string
@@ -1057,18 +1066,22 @@ components:
       type: array
       description: Describes additional feature packages available for install with the current version
       items:
-        type: object
-        properties:
-          feature_id:
-            type: string
-            description: The ID of the feature for the solution
-          install_state:
-            type: string
-            description: Whether the feature is required, optional, or recommended.
-            enum:
-              - optional
-              - required
-              - optional_selected    
+        $ref: "#/components/schemas/FeatureID"
+
+    FeatureID:
+      type: object
+      description: Describes an additional feature package available for install with the current version
+      properties:
+        feature_id:
+          type: string
+          description: The ID of the feature for the solution
+        install_state:
+          type: string
+          description: Whether the feature is required, optional, or recommended.
+          enum:
+            - optional
+            - required
+            - optional_selected    
     
     Installs:
       type: object
@@ -1077,28 +1090,30 @@ components:
           type: array
           minItems: 11
           items:
-            type: object
-            properties:
-              start:
-                type: string
-                format: datetime
-                description: |
-                  Start date for the range of counted installs in RFC 3339 format. Example, `1990-12-31T15:59:60-08:00`.
-                  
-                  More on this standard can be read at https://tools.ietf.org/html/rfc3339.
-              end: 
-                type: string
-                format: datetime
-                description: End date for the range of counted installs
-              count:
-                description: |
-                  Number of installs in the given period for the given version in RFC 3339 format. Example, `1990-12-31T15:59:60-08:00`.
-                  
-                  More on this standard can be read at https://tools.ietf.org/html/rfc3339.
-                type: integer
-                format: int32
-                minimum: 0 
+            $ref: "#/components/schemas/InstallStat"
         total:
           type: number
           description: The number of historic installs for the given resource
+
+    InstallStat:
+      type: object
+      properties:
+        start:
+          type: string
+          format: datetime
+          description: |
+            Start date for the range of counted installs in RFC 3339 format. Example, `1990-12-31T15:59:60-08:00`.
             
+            More on this standard can be read at https://tools.ietf.org/html/rfc3339.
+        end: 
+          type: string
+          format: datetime
+          description: End date for the range of counted installs
+        count:
+          description: |
+            Number of installs in the given period for the given version in RFC 3339 format. Example, `1990-12-31T15:59:60-08:00`.
+            
+            More on this standard can be read at https://tools.ietf.org/html/rfc3339.
+          type: integer
+          format: int32
+          minimum: 0 

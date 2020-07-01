@@ -103,7 +103,7 @@ paths:
           schema:
             type: array
             items:
-              type: string
+              $ref: "#/components/schemas/ObjectID"
           style: form
         - name: tags
           in: query
@@ -152,7 +152,7 @@ paths:
         description: Unique ID of an individual listing
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ObjectID"
       - $ref: "#/components/parameters/platform_version"
       - $ref: "#/components/parameters/java_version"
       - $ref: "#/components/parameters/os"
@@ -225,7 +225,7 @@ paths:
         description: Unique ID of an individual listing version
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ObjectID"
     get:
       tags:
         - Listing Versions
@@ -261,7 +261,7 @@ paths:
         description: Unique ID of an individual listing
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ObjectID"
       - $ref: "#/components/parameters/platform_version"
       - $ref: "#/components/parameters/java_version"
       - $ref: "#/components/parameters/os"
@@ -289,7 +289,7 @@ paths:
         description: Unique ID of an individual listing
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ObjectID"
     get:
       tags:
         - Installs
@@ -312,13 +312,13 @@ paths:
         description: Unique ID of an individual listing
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ObjectID"
       - name: version_id
         in: path
         description: Unique ID for the version that is being updated
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ObjectID"
     get:
       tags:
         - Installs
@@ -396,7 +396,7 @@ paths:
         description: Unique ID of an individual catalog
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ObjectID"
     get:
       tags:
         - Catalogs
@@ -468,7 +468,7 @@ paths:
         description: Unique ID of an individual market
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ObjectID"
     get:
       tags:
         - Markets
@@ -544,7 +544,7 @@ paths:
         description: Unique ID of an individual category
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ObjectID"
     get:
       tags:
         - Categories
@@ -620,7 +620,7 @@ paths:
         description: Unique ID of an individual error report
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ObjectID"
     get:
       tags:
         - Error reports
@@ -729,12 +729,12 @@ components:
           type: array
           description: List of IDs of markets this listing should be listed in 
           items:
-            type: string
+            $ref: "#/components/schemas/ObjectID"
         category_ids:
           type: array
           description: List of IDs of categories this listing should be listed in 
           items:
-            type: string
+            $ref: "#/components/schemas/ObjectID"
         tags:
           type: array
           items: 

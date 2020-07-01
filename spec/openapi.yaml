@@ -101,12 +101,18 @@ paths:
           in: query
           description: Comma-delimited list of listing IDs to retrieve for the call.
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+          style: form
         - name: tags
           in: query
           description: Comma-delimited list of tag names to filter results for.
           schema:
-            type: string
+            type: array
+            items: 
+              type: string
+          style: form
       responses:
         200:
           description: Success

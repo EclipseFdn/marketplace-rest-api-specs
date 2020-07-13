@@ -28,14 +28,10 @@ paths:
     get:
       tags:
         - Listings
+      operationId: get-listings
       summary: Listing list
       description: 'Returns a list of marketplace listings that match the given parameters, filtering out solutions that don''t match the filters.'
       parameters:
-        - $ref: '#/components/parameters/platform_version'
-        - $ref: '#/components/parameters/java_version'
-        - $ref: '#/components/parameters/os'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/limit'
         - name: market_id
           in: query
           description: The ID of the market to search in for listings
@@ -84,7 +80,7 @@ paths:
             This value should be in the format of `fieldname [ASC|DESC]`. For example, `installsrecent DESC`
           required: false
           schema:
-            type: string
+            $ref: '#/components/schemas/sort_whitelist'
         - name: featured
           in: query
           description: 'If set to true, will randomize results based on a random seed and ignore sort clauses.'
@@ -99,12 +95,23 @@ paths:
           in: query
           description: Comma-delimited list of listing IDs to retrieve for the call.
           schema:
-            type: string
+            type: array
+            items:
+              $ref: '#/components/schemas/ObjectID'
+          style: form
         - name: tags
           in: query
           description: Comma-delimited list of tag names to filter results for.
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+          style: form
+        - $ref: '#/components/parameters/platform_version'
+        - $ref: '#/components/parameters/java_version'
+        - $ref: '#/components/parameters/os'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
       responses:
         '200':
           description: Success
@@ -117,6 +124,7 @@ paths:
     put:
       tags:
         - Listings
+      operationId: put-listing
       summary: Listing update
       description: 'Using the passed listing object, updates, or in the case of new data inserts, are made in the data set to include the new information. User must be authorized to update items to access this endpoint.'
       requestBody:
@@ -143,13 +151,14 @@ paths:
         description: Unique ID of an individual listing
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ObjectID'
       - $ref: '#/components/parameters/platform_version'
       - $ref: '#/components/parameters/java_version'
       - $ref: '#/components/parameters/os'
     get:
       tags:
         - Listings
+      operationId: get-listing
       summary: Listing
       description: 'Returns a single listing that has a matching listing ID, filtering out versions that do not match the passed parameters.'
       responses:
@@ -166,6 +175,7 @@ paths:
     delete:
       tags:
         - Listings
+      operationId: delete-listing
       summary: Delete listing
       description: Deletes a single listing that has a matching ID. User must be authorized to delete items to access this endpoint.
       responses:
@@ -177,6 +187,7 @@ paths:
     get:
       tags:
         - Listing Versions
+      operationId: get-listing-versions
       summary: Listing version list
       description: Retrieves a list of listing versions available within the marketplace.
       parameters:
@@ -194,6 +205,7 @@ paths:
     put:
       tags:
         - Listing Versions
+      operationId: put-listing-version
       summary: Listing version update
       description: Add or update information about a listing version in the marketplace. User must be authorized to update items to access this endpoint.
       requestBody:
@@ -214,10 +226,11 @@ paths:
         description: Unique ID of an individual listing version
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ObjectID'
     get:
       tags:
         - Listing Versions
+      operationId: get-listing-version
       summary: Listing Version
       description: 'Retrieve a single listing version within the marketplace, matching on its ID.'
       responses:
@@ -232,6 +245,7 @@ paths:
     delete:
       tags:
         - Listing Versions
+      operationId: delete-listing-version
       summary: Delete Listing version
       description: Deletes a single listing version that has a matching ID. User must be authorized to delete items to access this endpoint.
       responses:
@@ -248,7 +262,7 @@ paths:
         description: Unique ID of an individual listing
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ObjectID'
       - $ref: '#/components/parameters/platform_version'
       - $ref: '#/components/parameters/java_version'
       - $ref: '#/components/parameters/os'
@@ -257,6 +271,7 @@ paths:
     get:
       tags:
         - Installs
+      operationId: get-installs
       summary: Installation count by listing ID
       description: 'Retrieve count of installs for marketplace a listing by its unique ID. The parameters that are available for this call act as filters for the statistics, allowing for greater flexibility of analysis of the Installation stats.'
       responses:
@@ -275,10 +290,11 @@ paths:
         description: Unique ID of an individual listing
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ObjectID'
     get:
       tags:
         - Installs
+      operationId: get-install-metrics
       summary: Install metrics by listing ID
       description: Retrieve install metrics for a marketplace listing by listing ID.
       responses:
@@ -297,13 +313,13 @@ paths:
         description: Unique ID of an individual listing
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ObjectID'
       - name: version_id
         in: path
         description: Unique ID for the version that is being updated
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ObjectID'
     get:
       tags:
         - Installs
@@ -312,6 +328,7 @@ paths:
         - $ref: '#/components/parameters/java_version'
         - $ref: '#/components/parameters/os'
         - $ref: '#/components/parameters/country'
+      operationId: get-installs-for-version
       description: 'Retrieve number of installs for the given marketplace listing and version by its unique listing ID and version number. The parameters that are available for this call act as filters for the statistics, allowing for greater flexibility of analysis of the Installation stats.'
       summary: Count of installs for given listing version install
       responses:
@@ -326,6 +343,7 @@ paths:
     post:
       tags:
         - Installs
+      operationId: post-install
       summary: Create Installation
       description: Add information about an install. (Only accessible via the marketplace client)
       responses:
@@ -339,6 +357,7 @@ paths:
     get:
       tags:
         - Catalogs
+      operationId: get-catalogs
       summary: Catalog list
       description: Retrieves information about the catalogs available in the marketplace.
       responses:
@@ -353,6 +372,7 @@ paths:
     put:
       tags:
         - Catalogs
+      operationId: put-catalog
       summary: Catalog update
       description: Add or update information about a catalog in the marketplace. User must be authorized to update items to access this endpoint.
       requestBody:
@@ -379,10 +399,11 @@ paths:
         description: Unique ID of an individual catalog
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ObjectID'
     get:
       tags:
         - Catalogs
+      operationId: get-catalog
       summary: Catalog
       description: 'Retrieve information on a single catalog, matching on the catalog ID.'
       responses:
@@ -399,6 +420,7 @@ paths:
     delete:
       tags:
         - Catalogs
+      operationId: delete-catalog
       summary: Delete catalog
       description: Deletes a single listing that has a matching ID. User must be authorized to delete items to access this endpoint.
       responses:
@@ -412,6 +434,7 @@ paths:
     get:
       tags:
         - Markets
+      operationId: get-markets
       summary: Market list
       description: Retrieves a listing of markets available within the marketplace.
       parameters:
@@ -429,6 +452,7 @@ paths:
     put:
       tags:
         - Markets
+      operationId: put-market
       summary: Market update
       description: Add or update information about a market in the marketplace. User must be authorized to update items to access this endpoint.
       requestBody:
@@ -449,10 +473,11 @@ paths:
         description: Unique ID of an individual market
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ObjectID'
     get:
       tags:
         - Markets
+      operationId: get-market
       summary: Market
       description: 'Retrieve a single market within the marketplace, matching on its ID.'
       responses:
@@ -467,6 +492,7 @@ paths:
     delete:
       tags:
         - Markets
+      operationId: delete-market
       summary: Delete Market
       description: Deletes a single market that has a matching ID. User must be authorized to delete items to access this endpoint.
       responses:
@@ -483,6 +509,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/limit'
+      operationId: get-categories
       summary: Category list
       description: Retrieves a listing of categories available within the marketplace.
       responses:
@@ -497,6 +524,7 @@ paths:
     put:
       tags:
         - Categories
+      operationId: put-category
       summary: Category update
       description: Add or update information about a category in the marketplace. User must be authorized to update items to access this endpoint.
       requestBody:
@@ -523,11 +551,12 @@ paths:
         description: Unique ID of an individual category
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ObjectID'
     get:
       tags:
         - Categories
-      summary: Catagory
+      operationId: get-category
+      summary: Category
       description: 'Retrieves a category available within the marketplace, matched on its ID.'
       responses:
         '200':
@@ -543,6 +572,7 @@ paths:
     delete:
       tags:
         - Categories
+      operationId: delete-category
       summary: Delete category
       description: Deletes a single category that has a matching ID. User must be authorized to delete items to access this endpoint.
       responses:
@@ -559,6 +589,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/limit'
+      operationId: get-error-reports
       summary: Error reports list
       description: Retrieves a list of error reports available within the marketplace.
       responses:
@@ -573,6 +604,7 @@ paths:
     put:
       tags:
         - Error reports
+      operationId: put-error-report
       summary: Error reports update
       description: Add or update information about a error report in the marketplace. User must be authorized to update items to access this endpoint.
       requestBody:
@@ -597,10 +629,11 @@ paths:
         description: Unique ID of an individual error report
         required: true
         schema:
-          type: string
+          $ref: '#/components/schemas/ObjectID'
     get:
       tags:
         - Error reports
+      operationId: get-error-report
       summary: Error report
       description: 'Retrieves an error report available within the marketplace, matched on its ID.'
       responses:
@@ -617,6 +650,7 @@ paths:
     delete:
       tags:
         - Error reports
+      operationId: delete-error-report
       summary: Delete error report
       description: Deletes a single error report that has a matching ID. User must be authorized to delete items to access this endpoint.
       responses:
@@ -704,12 +738,12 @@ components:
           type: array
           description: List of IDs of markets this listing should be listed in
           items:
-            type: string
+            $ref: '#/components/schemas/ObjectID'
         category_ids:
           type: array
           description: List of IDs of categories this listing should be listed in
           items:
-            type: string
+            $ref: '#/components/schemas/ObjectID'
         tags:
           type: array
           items:
@@ -719,16 +753,7 @@ components:
           description: Individuals involved with the development of the listing
           type: array
           items:
-            type: object
-            properties:
-              id:
-                $ref: '#/components/schemas/ObjectID'
-              full_name:
-                type: string
-                description: Name of the author
-              username:
-                type: string
-                description: Eclipse Foundation username of the author
+            $ref: '#/components/schemas/Account'
         favorite_count:
           type: integer
           description: Number of times a listing was add to a favorite list.
@@ -749,9 +774,11 @@ components:
           description: Full description
         created:
           type: integer
+          format: int64
           description: Timestamp
         changed:
           type: integer
+          format: int64
           description: Timestamp
         foundation_member:
           type: boolean
@@ -766,15 +793,8 @@ components:
           type: string
           description: Listing license
         organization:
-          type: object
+          $ref: '#/components/schemas/Organization'
           description: Organizations involved with the development of the listing
-          properties:
-            name:
-              type: string
-              description: Organization name
-            id:
-              $ref: '#/components/schemas/ObjectID'
-              description: Organizational member ID
         status:
           type: string
           description: Release status
@@ -792,6 +812,26 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Listing'
+    Account:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ObjectID'
+        full_name:
+          type: string
+          description: Name of the author
+        username:
+          type: string
+          description: Eclipse Foundation username for the account
+    Organization:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Organization name
+        id:
+          $ref: '#/components/schemas/ObjectID'
+          description: Organizational member ID
     Tag:
       type: object
       properties:
@@ -880,21 +920,23 @@ components:
           type: array
           description: List of tabs to be included within a catalog
           items:
-            type: object
-            properties:
-              title:
-                type: string
-                description: Name of the tab to display
-              url:
-                type: string
-                description: URL for default content of the tab
-              type:
-                type: string
-                description: 'Type of tab, can either be a default tab, a search tab, or an embedded content tab'
-                enum:
-                  - default
-                  - search
-                  - embedded
+            $ref: '#/components/schemas/CatalogTab'
+    CatalogTab:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Name of the tab to display
+        url:
+          type: string
+          description: URL for default content of the tab
+        type:
+          type: string
+          description: 'Type of tab, can either be a default tab, a search tab, or an embedded content tab'
+          enum:
+            - default
+            - search
+            - embedded
     license_type:
       type: string
       enum:
@@ -928,7 +970,7 @@ components:
         id:
           $ref: '#/components/schemas/ObjectID'
         listing_id:
-          description: The listing ID this solution version represents
+          description: The listing ID this listing version represents
           $ref: '#/components/schemas/ObjectID'
         version:
           type: string
@@ -1014,18 +1056,21 @@ components:
       type: array
       description: Describes additional feature packages available for install with the current version
       items:
-        type: object
-        properties:
-          feature_id:
-            type: string
-            description: The ID of the feature for the solution
-          install_state:
-            type: string
-            description: 'Whether the feature is required, optional, or recommended.'
-            enum:
-              - optional
-              - required
-              - optional_selected
+        $ref: '#/components/schemas/FeatureID'
+    FeatureID:
+      type: object
+      description: Describes an additional feature package available for install with the current version
+      properties:
+        feature_id:
+          type: string
+          description: The ID of the feature for the solution
+        install_state:
+          type: string
+          description: 'Whether the feature is required, optional, or recommended.'
+          enum:
+            - optional
+            - required
+            - optional_selected
     Installs:
       type: object
       properties:
@@ -1033,27 +1078,29 @@ components:
           type: array
           minItems: 11
           items:
-            type: object
-            properties:
-              start:
-                type: string
-                format: datetime
-                description: |
-                  Start date for the range of counted installs in RFC 3339 format. Example, `1990-12-31T15:59:60-08:00`.
-
-                  More on this standard can be read at https://tools.ietf.org/html/rfc3339.
-              end:
-                type: string
-                format: datetime
-                description: End date for the range of counted installs
-              count:
-                description: |
-                  Number of installs in the given period for the given version in RFC 3339 format. Example, `1990-12-31T15:59:60-08:00`.
-
-                  More on this standard can be read at https://tools.ietf.org/html/rfc3339.
-                type: integer
-                format: int32
-                minimum: 0
+            $ref: '#/components/schemas/InstallStat'
         total:
           type: number
           description: The number of historic installs for the given resource
+    InstallStat:
+      type: object
+      properties:
+        start:
+          type: string
+          format: datetime
+          description: |
+            Start date for the range of counted installs in RFC 3339 format. Example, `1990-12-31T15:59:60-08:00`.
+
+            More on this standard can be read at https://tools.ietf.org/html/rfc3339.
+        end:
+          type: string
+          format: datetime
+          description: End date for the range of counted installs
+        count:
+          description: |
+            Number of installs in the given period for the given version in RFC 3339 format. Example, `1990-12-31T15:59:60-08:00`.
+
+            More on this standard can be read at https://tools.ietf.org/html/rfc3339.
+          type: integer
+          format: int32
+          minimum: 0

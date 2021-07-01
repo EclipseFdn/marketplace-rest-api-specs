@@ -960,12 +960,15 @@ components:
           type: string
           description: URL for default content of the tab
         type:
-          type: string
-          description: Type of tab, can either be a default tab, a search tab, or an embedded content tab
-          enum:
-            - default
-            - search
-            - embedded
+          $ref: "#/components/schemas/catalog_tab_type"
+
+    catalog_tab_type:
+      type: string
+      description: Type of tab, can either be a default tab, a search tab, or an embedded content tab
+      enum:
+        - default
+        - search
+        - embedded
 
     license_type:
       type: string
@@ -1104,12 +1107,15 @@ components:
           type: string
           description: The ID of the feature for the solution
         install_state:
-          type: string
-          description: Whether the feature is required, optional, or recommended.
-          enum:
-            - optional
-            - required
-            - optional_selected    
+          $ref: "#/components/schemas/install_state"
+
+    install_state:
+      type: string
+      description: Whether the feature is required, optional, or recommended.
+      enum:
+        - optional
+        - required
+        - optional_selected
     
     Installs:
       type: object

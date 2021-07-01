@@ -812,8 +812,9 @@ components:
           type: string
           description: Listing license
         organization:
-          $ref: "#/components/schemas/Organization"
           description: Organizations involved with the development of the listing
+          allOf:
+            - $ref: "#/components/schemas/Organization"
         status:
           type: string
           description: Release status
@@ -852,8 +853,9 @@ components:
           type: string
           description: Organization name
         id:
-          $ref: "#/components/schemas/ObjectID"
           description: Organizational member ID
+          allOf:
+            - $ref: "#/components/schemas/ObjectID"
 
     Tag:
       type: object
@@ -896,8 +898,9 @@ components:
           type: string
           description: URL to retrieve the market details.
         categories:
-          $ref: "#/components/schemas/Categories"
           description: Array of categories that are used for the current market
+          allOf:
+            - $ref: "#/components/schemas/Categories"
         listing_ids:
           type: array
           items: 
@@ -1008,7 +1011,8 @@ components:
           $ref: "#/components/schemas/ObjectID"
         listing_id:
           description: The listing ID this listing version represents
-          $ref: "#/components/schemas/ObjectID"
+          allOf:
+            - $ref: "#/components/schemas/ObjectID"
         version:
           type: string
           description: Version name string
@@ -1045,11 +1049,13 @@ components:
           type: string
           description: The OS detected for the record
         version:
-          $ref: "#/components/schemas/ObjectID"
           description: ID of the Listing version that was installed
+          allOf:
+            - $ref: "#/components/schemas/ObjectID"
         listing_id:
-          $ref: "#/components/schemas/ObjectID"
           description: ID of the Listing that was installed
+          allOf:
+            - $ref: "#/components/schemas/ObjectID"
         java_version:
           type: string
           description: Detected Java version for this record

@@ -896,9 +896,7 @@ components:
           type: string
           description: URL to retrieve the market details.
         categories:
-          type: array
-          items: 
-            $ref: "#/components/schemas/Categories"
+          $ref: "#/components/schemas/Categories"
           description: Array of categories that are used for the current market
         listing_ids:
           type: array

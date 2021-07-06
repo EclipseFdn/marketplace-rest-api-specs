@@ -792,12 +792,12 @@ components:
           type: string
           description: Full description
         created:
-          type: integer
-          format: int64
+          type: string
+          format: date-time
           description: Timestamp
         changed:
-          type: integer
-          format: int64
+          type: string
+          format: date-time
           description: Timestamp
         foundation_member:
           type: boolean
@@ -812,8 +812,9 @@ components:
           type: string
           description: Listing license
         organization:
-          $ref: "#/components/schemas/Organization"
           description: Organizations involved with the development of the listing
+          allOf:
+            - $ref: "#/components/schemas/Organization"
         status:
           type: string
           description: Release status
@@ -852,8 +853,9 @@ components:
           type: string
           description: Organization name
         id:
-          $ref: "#/components/schemas/ObjectID"
           description: Organizational member ID
+          allOf:
+            - $ref: "#/components/schemas/ObjectID"
 
     Tag:
       type: object
@@ -896,10 +898,9 @@ components:
           type: string
           description: URL to retrieve the market details.
         categories:
-          type: array
-          items: 
-            $ref: "#/components/schemas/Categories"
           description: Array of categories that are used for the current market
+          allOf:
+            - $ref: "#/components/schemas/Categories"
         listing_ids:
           type: array
           items: 
@@ -962,12 +963,15 @@ components:
           type: string
           description: URL for default content of the tab
         type:
-          type: string
-          description: Type of tab, can either be a default tab, a search tab, or an embedded content tab
-          enum:
-            - default
-            - search
-            - embedded
+          $ref: "#/components/schemas/catalog_tab_type"
+
+    catalog_tab_type:
+      type: string
+      description: Type of tab, can either be a default tab, a search tab, or an embedded content tab
+      enum:
+        - default
+        - search
+        - embedded
 
     license_type:
       type: string
@@ -1007,7 +1011,8 @@ components:
           $ref: "#/components/schemas/ObjectID"
         listing_id:
           description: The listing ID this listing version represents
-          $ref: "#/components/schemas/ObjectID"
+          allOf:
+            - $ref: "#/components/schemas/ObjectID"
         version:
           type: string
           description: Version name string
@@ -1044,11 +1049,13 @@ components:
           type: string
           description: The OS detected for the record
         version:
-          $ref: "#/components/schemas/ObjectID"
           description: ID of the Listing version that was installed
+          allOf:
+            - $ref: "#/components/schemas/ObjectID"
         listing_id:
-          $ref: "#/components/schemas/ObjectID"
           description: ID of the Listing that was installed
+          allOf:
+            - $ref: "#/components/schemas/ObjectID"
         java_version:
           type: string
           description: Detected Java version for this record
@@ -1106,12 +1113,15 @@ components:
           type: string
           description: The ID of the feature for the solution
         install_state:
-          type: string
-          description: Whether the feature is required, optional, or recommended.
-          enum:
-            - optional
-            - required
-            - optional_selected    
+          $ref: "#/components/schemas/install_state"
+
+    install_state:
+      type: string
+      description: Whether the feature is required, optional, or recommended.
+      enum:
+        - optional
+        - required
+        - optional_selected
     
     Installs:
       type: object
